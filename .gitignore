@@ -1,5 +1,5 @@
 # ignore all setting files from Intellij
-.idea
+.idea/
 
 # ignore binary files
 bin/
