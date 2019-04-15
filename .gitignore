@@ -1,0 +1,9 @@
+# ignore all setting files from Intellij
+.idea
+
+# ignore binary files
+bin/
+
+# ignore OS generated files
+Thumbs.db
+.DS_Store
