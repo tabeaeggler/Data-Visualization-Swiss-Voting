@@ -1,6 +1,6 @@
 // set the dimensions and margins of the graph
 var margin = {top: 20, right: 30, bottom: 30, left: 60},
-    width = 1000 - margin.left - margin.right,
+    width = 800 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
 
 var color1 = ['#8C0335','#1C4259','#63D8F2','#F28A2E','#F2CCB6'];
@@ -23,48 +23,28 @@ var svg = d3.select("#streamgraph")
         "translate(" + margin.left + "," + margin.top + ")");
 
 // Convert CSV into an array of objects
-d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/5_OneCatSevNumOrdered_wide.csv", function(data) {
+d3.csv("./data/Swissvote.csv", function(data) {
     console.log(data);
     // List of groups = header of the csv files
     var keys = data.columns.slice(1)
     console.log(keys);
 
+    const yearDomain = d3.extent(data, d => String(d.jahrzehnt).substr(0, d.jahrzehnt.length - 7));
+    console.log(yearDomain)
+
     // Add X axis
     var x = d3.scaleLinear()
-        .domain(d3.extent(data, function(d) { return d.year; }))
-        .range([ 0, width ]);
+        .domain(yearDomain)
+        .range([ 0, width ])
+        .nice() //TODO: Why?
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x).ticks(5));
+        .call(d3.axisBottom(x).tickPadding(5).tickFormat(d3.format("d")));
 
     // Add Y axis
     var y = d3.scaleLinear()
-        .domain([0, 200000])
+        .domain([0, 100])
         .range([ height, 0 ]);
     svg.append("g")
-        .call(d3.axisLeft(y));
-
-    // color palette
-    var color = d3.scaleOrdinal()
-        .domain(keys)
-        .range(color7)
-
-    //stack -> To build a streamgraph, data must be stacked
-    var stackedData = d3.stack()
-        .offset(d3.stackOffsetNone) //stackOffsetSilhouette
-        .keys(keys)
-        (data)
-
-    // Show the areas -> Once the new coordinates are available, shapes can be added through path, using the d3.area() helper.
-    svg
-        .selectAll("mylayers")
-        .data(stackedData)
-        .enter()
-        .append("path")
-        .style("fill", function(d) { return color(d.key); })
-        .attr("d", d3.area()
-            .x(function(d, i) { return x(d.data.year); })
-            .y0(function(d) { return y(d[0]); })
-            .y1(function(d) { return y(d[1]); })
-        )
+        .call(d3.axisLeft(y).tickPadding(2));
 })
