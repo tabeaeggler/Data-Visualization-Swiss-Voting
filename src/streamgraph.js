@@ -23,28 +23,60 @@ var svg = d3.select("#streamgraph")
         "translate(" + margin.left + "," + margin.top + ")");
 
 // Convert CSV into an array of objects
-d3.csv("./data/Swissvote.csv", function(data) {
-    console.log(data);
+d3.csv("./data/Swissvote.csv").then(function(data) {
     // List of groups = header of the csv files
-    var keys = data.columns.slice(1)
-    console.log(keys);
+    //var keys = data.columns.slice(1)
 
+    const keys = [1,2,3,4,5,6,7,8,9,10,11,12]
     const yearDomain = d3.extent(data, d => String(d.jahrzehnt).substr(0, d.jahrzehnt.length - 7));
-    console.log(yearDomain)
+    const countDomain = [0, 100];
+
 
     // Add X axis
-    var x = d3.scaleLinear()
+    var xAxis = d3.scaleLinear()
         .domain(yearDomain)
         .range([ 0, width ])
         .nice() //TODO: Why?
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x).tickPadding(5).tickFormat(d3.format("d")));
+        .call(d3.axisBottom(xAxis).tickPadding(5).tickFormat(d3.format("d")));
 
     // Add Y axis
-    var y = d3.scaleLinear()
-        .domain([0, 100])
+    var yAxis = d3.scaleLinear()
+        .domain(countDomain)
         .range([ height, 0 ]);
     svg.append("g")
-        .call(d3.axisLeft(y).tickPadding(2));
+        .call(d3.axisLeft(yAxis).tickPadding(2));
+
+    // color palette
+    var color = d3.scaleOrdinal()
+      .domain(keys)
+      .range(color1)
+
+    //stack -> To build a streamgraph, data must be stacked
+    var stackedData = d3.stack()
+        .offset(d3.stackOffsetNone)
+        .keys(keys)
+        (data)
+
+    var area = d3.area()
+        .x(function(d) {
+            return xAxis(d.data.jahrzehnt);
+        })
+        .y0(function(d) {
+            return yAxis(); //TODO: ?
+        }) //baseline
+        .y1(function(d) {
+            return yAxis(); //TODO: ?
+        }) //top line
+
+
+    // Show the areas -> Once the new coordinates are available, shapes can be added through path, using the d3.area() helper.
+    svg
+        .selectAll("layers")
+        .data(stackedData)
+        .enter()
+        .append("path")
+        .style("fill", function(d) { return color(d.key); })
+        .attr("d", area)
 })
