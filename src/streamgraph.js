@@ -24,10 +24,17 @@ var svg = d3.select("#streamgraph")
 
 // Convert CSV into an array of objects
 d3.csv("./data/Swissvote.csv").then(function(data) {
-    // List of groups = header of the csv files
-    //var keys = data.columns.slice(1)
 
-    const keys = [1,2,3,4,5,6,7,8,9,10,11,12]
+    //nest data
+    var nestedData = Array.from(d3.nest()
+        .key(function (d) {return d.jahrzehnt;})
+        .key(function (d) { return d.d1e1;})
+        .rollup(function(v) { return v.length; })
+        .entries(data));
+
+    console.log(nestedData);
+
+    const keys = [1,2,3,4,5,6,7,8,9,10,11,12];
     const yearDomain = d3.extent(data, d => String(d.jahrzehnt).substr(0, d.jahrzehnt.length - 7));
     const countDomain = [0, 100];
 
@@ -57,18 +64,14 @@ d3.csv("./data/Swissvote.csv").then(function(data) {
     var stackedData = d3.stack()
         .offset(d3.stackOffsetNone)
         .keys(keys)
-        (data)
+        (nestedData)
 
     var area = d3.area()
         .x(function(d) {
             return xAxis(d.data.jahrzehnt);
         })
-        .y0(function(d) {
-            return yAxis(); //TODO: ?
-        }) //baseline
-        .y1(function(d) {
-            return yAxis(); //TODO: ?
-        }) //top line
+        .y0(function(d) { return 1}) //baseline
+        .y1(function(d) { return 0})
 
 
     // Show the areas -> Once the new coordinates are available, shapes can be added through path, using the d3.area() helper.
