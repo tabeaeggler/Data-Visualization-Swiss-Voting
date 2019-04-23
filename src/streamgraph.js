@@ -67,7 +67,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
     var xAxis = d3.scaleLinear()
         .domain(yearDomain)
         .range([0, width])
-        .nice() //TODO: Why?
+        .nice()
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(xAxis).tickPadding(5).tickFormat(d3.format("d")));
@@ -88,6 +88,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
     var stackedData = d3.stack()
         .offset(d3.stackOffsetNone)
         .keys(keys)
+        //TODO: Stack data correctly
         .value(function (d, key) {
             return d.values;
         })
