@@ -76,46 +76,72 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         .domain(keys)
         .range(color1)
 
-//stack -> To build a streamgraph, data must be stacked
+    var example = [{1: "1", 2: "0", 3: "0", 4: "0", 5:"0", 6:"0", 7:"0", 8:"0", 9:"0", 10:"0", 11:"0", 12:"0", decade: "1860" },
+        {1: "3", 2: "0", 3: "0", 4: "0", 5:"5", 6:"0", 7:"0", 8:"0", 9:"0", 10:"9", 11:"0", 12:"0", decade: "1870" },
+        {1: 1, 2: "0", 3: "2", 4: "0", 5:"0", 6:"5", 7:"0", 8:"0", 9:"0", 10:"6", 11:"0", 12:"0", decade: "1880" }];
+    console.log("ex")
+
+    console.log(example)
+
+// //stack -> To build a streamgraph, data must be stacked
+//     var stackedData = d3.stack()
+//         .offset(d3.stackOffsetNone)
+//         .keys(keys)
+//         (example)
+//
+//     //replace NaN values
+//     stackedData.forEach(function (a, indexa) {
+//         a.forEach(function (b, indexb) {
+//             b.forEach(function (c, indexc) {
+//                 if (isNaN(c)) {
+//                     stackedData[indexa][indexb][indexc] = 0;
+//                 }
+//             })
+//         })
+//     });
+//
+//     console.log("stack")
+//     console.log(stackedData)
+//
+//
+// // Show the areas
+//     svg
+//         .selectAll()
+//         .data(stackedData)
+//         .enter()
+//         .append("path")
+//         .style("fill", function (d) {
+//             return color(d.key);
+//         })
+//         .attr("d", d3.area() //TODO: Path error
+//             .x(function (d) {
+//                 return xAxis(d.data.jahrzehnt)
+//             })
+//             .y0(function (d) {
+//                 console.log(d)
+//                 return yAxis(d[0]);
+//             })
+//             .y1(function (d) {
+//                 return yAxis(d[1]);
+//             })
+//         )
+
     var stackedData = d3.stack()
         .offset(d3.stackOffsetNone)
         .keys(keys)
-        (nestedStackData)
+        (example)
 
-    //replace NaN values
-    stackedData.forEach(function (a, indexa) {
-        a.forEach(function (b, indexb) {
-            b.forEach(function (c, indexc) {
-                if (isNaN(c)) {
-                    stackedData[indexa][indexb][indexc] = 0;
-                }
-            })
-        })
-    });
-
-    console.log(stackedData)
-
-
-// Show the areas
+    // Show the areas
     svg
-        .selectAll()
+        .selectAll("mylayers")
         .data(stackedData)
         .enter()
         .append("path")
-        .style("fill", function (d) {
-            return color(d.key);
-        })
-        .attr("d", d3.area() //TODO: Path error
-            .x(function (d) {
-                return xAxis(d.data.jahrzehnt)
-            })
-            .y0(function (d) {
-                console.log(d)
-                return yAxis(d[0]);
-            })
-            .y1(function (d) {
-                return yAxis(d[1]);
-            })
+        .style("fill", function(d) { return color(d.key); })
+        .attr("d", d3.area()
+            .x(function(d, i) { return xAxis(d.data.decade); })
+            .y0(function(d) { return yAxis(d[0]); })
+            .y1(function(d) { return yAxis(d[1]); })
         )
 
 })
