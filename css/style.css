@@ -1,0 +1,9 @@
+.streamgraph-tooltip {
+    font-family: Arial;
+    font-weight: lighter;
+    font-size: 16pt;
+}
+
+.tick {
+    z-index: 1000;
+}

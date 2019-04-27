@@ -1,16 +1,9 @@
 // set the dimensions and margins of the graph
-var margin = {top: 20, right: 30, bottom: 30, left: 60},
-    width = 800 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+var margin = {top: 20, right: 30, bottom: 60, left: 60},
+    width = 1300 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
 
-var color1 = ['#8C0335', '#1C4259', '#63D8F2', '#F28A2E', '#F2CCB6'];
-var color3 = ['#C5C8D9', '#8090A6', '#C8D98B', '#F2C1B6', '#A68686'];
-var color4 = ['#8C3041', '#BDD9F2', '#D5E5F2', '#8A8C56', '#8C7558'];
-var color5 = ['#A2CDF2', '#30698C', '#B6DBF2', '#748C5D', '#98A633'];
-var color6 = ['#173F5F', '#20639B', '#3CAEA3', '#F6D55C', '#ED553B'];
-var color7 = ['#C06C86', '#6D5C7C', '#325D7F', '#F9B294', '#F47081'];
-var color8 = ['#FFF5ED', '#EEE4DD', '#89837F', '#CEC5BE', '#EE6060'];
-
+var color1 = ['#001E50', '#026F94', '#018C9A', '#6BA99E', '#FDDFB1', '#FDAF6C', '#FF6B2D', '#FC3617'];
 
 // append the svg object to the body of the page
 var svg = d3.select("#streamgraph")
@@ -37,9 +30,6 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         })
         .entries(data))
 
-    console.log("nesteddata")
-    console.log(nestedData)
-
 
     //map values of nested data into a onedimensional array of objects
     var dataToBeStacked = []
@@ -51,8 +41,6 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         dataToBeStacked.push(temp);
     });
 
-    console.log("dataToBestacked")
-    console.log(dataToBeStacked)
 
     //crate default object
     var defaultObject = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, decade: ""}
@@ -64,19 +52,20 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
             if (!hasOwnProperty.call(a, prop)) {
                 console.log("object " + index)
                 console.log("proberty " + prop + " is missing")
-                dataToBeStacked[index][prop] = 0
+                dataToBeStacked[index][prop] = 0.5
             }
         }
         //add decade and set value
         dataToBeStacked[index].decade = nestedData[index].key.substr(0, nestedData[index].key.length - 7)
+        if (index == dataToBeStacked.length - 1) {
+            dataToBeStacked[index].decade = 2020
+        }
     })
 
-    console.log("datatobestacked after filling");
-    console.log(dataToBeStacked)
 
     const keys = d3.set(data.map(d => d.d1e1)).values();
     const yearDomain = d3.extent(data, d => String(d.jahrzehnt).substr(0, d.jahrzehnt.length - 7));
-    const countDomain = [0, 100];
+    const countDomain = [0, 110];
 
 
 // Add X axis
@@ -84,9 +73,13 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         .domain(yearDomain)
         .range([0, width])
         .nice()
+
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(xAxis).tickPadding(5).tickFormat(d3.format("d")));
+        .call(d3.axisBottom(xAxis).tickPadding(5).tickFormat(d3.format("d")))
+            //.tickSize(-height)) --> würde Linien nach oben ziehen
+
+    svg.selectAll(".tickline").attr("stroke", "#b8b8b8")
 
 // Add Y axis
     var yAxis = d3.scaleLinear()
@@ -94,6 +87,25 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         .range([height, 0]);
     svg.append("g")
         .call(d3.axisLeft(yAxis).tickPadding(2));
+
+    //add y-axis lable
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("x",0 - (height / 2))
+        .attr("y", 0 - margin.left)
+        .attr("dy", "14pt")
+        .attr("font-family", "sans-serif")
+        .style("text-anchor", "middle")
+        .text("Anzahl Abstimmungen");
+
+    //add x-axis lable
+    svg.append("text")
+        .attr("x", width - 10)
+        .attr("y", height + 30)
+        .attr("dy", "14pt")
+        .attr("font-family", "sans-serif")
+        .style("text-anchor", "middle")
+        .text("Zeit");
 
 // color palette
     var color = d3.scaleOrdinal()
@@ -105,12 +117,81 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         .keys(keys)
         (dataToBeStacked)
 
+    var Tooltip = svg
+        .append("text")
+        .attr("x", 350)
+        .attr("y", 200)
+        .style("opacity", 0)
+        .attr("class", "streamgraph-tooltip")
+
+    // Three function that change the tooltip when user hover / move / leave a cell
+    var mouseover = function (d) {
+        Tooltip.style("opacity", 1)
+        d3.selectAll(".myArea")
+            .style("opacity", .2)
+        d3.select(this)
+            .style("stroke", "white")
+            .style("opacity", 1)
+    }
+    var mousemove = function (d, i) {
+        grp = keys[i]
+        switch (grp) {
+            case "1":
+                grp = "Staatsordung";
+                break;
+            case "2":
+                grp = "Aussenpolitik";
+                break;
+            case "3":
+                grp = "Sicherheitspolitik";
+                break;
+            case "4":
+                grp = "Wirtschaft";
+                break;
+            case "5":
+                grp = "Landwirtschaft";
+                break;
+            case "6":
+                grp = "Öffentliche Finanzen";
+                break;
+            case "7":
+                grp = "Energie";
+                break;
+            case "8":
+                grp = "Verkehr und Infrastruktur";
+                break;
+            case "9":
+                grp = "Umwelt und Lebensraum";
+                break;
+            case "10":
+                grp = "Soziale Fragen – Sozialpolitik";
+                break;
+            case "11":
+                grp = "Bildung und Forschung";
+                break;
+            case "12":
+                grp = "Kultur, Religion, Medien";
+                break;
+            default:
+
+        }
+        Tooltip.text(grp)
+    }
+    var mouseleave = function (d) {
+        Tooltip.style("opacity", 0)
+        d3.selectAll(".myArea")
+            .style("opacity", 1)
+            .style("stroke", "none")
+        console.log("mouse has left")
+    }
+
     // Show the areas
     svg
         .selectAll("mylayers")
         .data(stackedData)
         .enter()
         .append("path")
+        .attr("class", "myArea")
         .style("fill", function (d) {
             return color(d.key);
         })
@@ -126,5 +207,8 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
                 return yAxis(d[1]);
             })
         )
+        .on("mouseover", mouseover)
+        .on("mousemove", mousemove)
+        .on("mouseleave", mouseleave)
 
 })
