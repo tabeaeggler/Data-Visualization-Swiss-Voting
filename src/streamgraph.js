@@ -37,26 +37,18 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         })
         .entries(data))
 
-    //tried to fill empty values
-    // .map(function (obj) {
-    //     if(obj.values.length < 12) {
-    //         var existingValues = [];
-    //         for(var i = 0; i < obj.values.length; i++) {
-    //                 existingValues.push(i + 1)
-    //         }
-    //         console.log(existingValues);
-    //         for(var j = 1; j <= 12; i++) {
-    //             for(var k = 0; k < existingValues.length; k++) {
-    //                if(existingValues [k] !== j) {
-    //                    obj.values.push({key: j, values: 0})
-    //                }
-    //             }
-    //         }
-    //     }
-    // });
+    console.log(nestedData)
 
+    //create array to for stacking
+    nestedStackData = [];
+    nestedData.forEach(d => {
+        var temp = {}
+        d.values.forEach(e => {
+            temp[e.key] = e.value;
+        })
+        nestedStackData.push(temp);
+    });
 
-    console.log(nestedData);
 
     const keys = d3.set(data.map(d => d.d1e1)).values();
     const yearDomain = d3.extent(data, d => String(d.jahrzehnt).substr(0, d.jahrzehnt.length - 7));
@@ -88,33 +80,42 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
     var stackedData = d3.stack()
         .offset(d3.stackOffsetNone)
         .keys(keys)
-        //TODO: Stack data correctly
-        .value(function (d, key) {
-            return d.values;
+        (nestedStackData)
+
+    //replace NaN values
+    stackedData.forEach(function (a, indexa) {
+        a.forEach(function (b, indexb) {
+            b.forEach(function (c, indexc) {
+                if (isNaN(c)) {
+                    stackedData[indexa][indexb][indexc] = 0;
+                }
+            })
         })
-        (nestedData)
-    console.log(keys)
+    });
+
     console.log(stackedData)
 
-    var area = d3.area()
-        .x(function (d) {
-            return xAxis(d.data.jahrzehnt);
-        })
-        .y0(function (d) {
-            //console.log(d[0])}) //baseline
-        })
-        .y1(function (d) { //console.log(d[1])})
-        })
 
-
-// Show the areas -> Once the new coordinates are available, shapes can be added through path, using the d3.area() helper.
+// Show the areas
     svg
-        .selectAll("layers")
+        .selectAll()
         .data(stackedData)
         .enter()
         .append("path")
         .style("fill", function (d) {
             return color(d.key);
         })
-        .attr("d", area)
+        .attr("d", d3.area() //TODO: Path error
+            .x(function (d) {
+                return xAxis(d.data.jahrzehnt)
+            })
+            .y0(function (d) {
+                console.log(d)
+                return yAxis(d[0]);
+            })
+            .y1(function (d) {
+                return yAxis(d[1]);
+            })
+        )
+
 })
