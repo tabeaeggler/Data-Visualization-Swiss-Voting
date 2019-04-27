@@ -37,18 +37,42 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         })
         .entries(data))
 
+    console.log("nesteddata")
     console.log(nestedData)
 
-    //create array to for stacking
-    nestedStackData = [];
+
+    //map values of nested data into a onedimensional array of objects
+    var dataToBeStacked = []
     nestedData.forEach(d => {
         var temp = {}
         d.values.forEach(e => {
             temp[e.key] = e.value;
         })
-        nestedStackData.push(temp);
+        dataToBeStacked.push(temp);
     });
 
+    console.log("dataToBestacked")
+    console.log(dataToBeStacked)
+
+    //crate default object
+    var defaultObject = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, decade: ""}
+
+    //fill missing values
+    dataToBeStacked.forEach(function (a, index) {
+        //add missing categories and initilize with zero
+        for (prop in defaultObject) {
+            if (!hasOwnProperty.call(a, prop)) {
+                console.log("object " + index)
+                console.log("proberty " + prop + " is missing")
+                dataToBeStacked[index][prop] = 0
+            }
+        }
+        //add decade and set value
+        dataToBeStacked[index].decade = nestedData[index].key.substr(0, nestedData[index].key.length - 7)
+    })
+
+    console.log("datatobestacked after filling");
+    console.log(dataToBeStacked)
 
     const keys = d3.set(data.map(d => d.d1e1)).values();
     const yearDomain = d3.extent(data, d => String(d.jahrzehnt).substr(0, d.jahrzehnt.length - 7));
@@ -76,60 +100,10 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         .domain(keys)
         .range(color1)
 
-    var example = [{1: "1", 2: "0", 3: "0", 4: "0", 5:"0", 6:"0", 7:"0", 8:"0", 9:"0", 10:"0", 11:"0", 12:"0", decade: "1860" },
-        {1: "3", 2: "0", 3: "0", 4: "0", 5:"5", 6:"0", 7:"0", 8:"0", 9:"0", 10:"9", 11:"0", 12:"0", decade: "1870" },
-        {1: 1, 2: "0", 3: "2", 4: "0", 5:"0", 6:"5", 7:"0", 8:"0", 9:"0", 10:"6", 11:"0", 12:"0", decade: "1880" }];
-    console.log("ex")
-
-    console.log(example)
-
-// //stack -> To build a streamgraph, data must be stacked
-//     var stackedData = d3.stack()
-//         .offset(d3.stackOffsetNone)
-//         .keys(keys)
-//         (example)
-//
-//     //replace NaN values
-//     stackedData.forEach(function (a, indexa) {
-//         a.forEach(function (b, indexb) {
-//             b.forEach(function (c, indexc) {
-//                 if (isNaN(c)) {
-//                     stackedData[indexa][indexb][indexc] = 0;
-//                 }
-//             })
-//         })
-//     });
-//
-//     console.log("stack")
-//     console.log(stackedData)
-//
-//
-// // Show the areas
-//     svg
-//         .selectAll()
-//         .data(stackedData)
-//         .enter()
-//         .append("path")
-//         .style("fill", function (d) {
-//             return color(d.key);
-//         })
-//         .attr("d", d3.area() //TODO: Path error
-//             .x(function (d) {
-//                 return xAxis(d.data.jahrzehnt)
-//             })
-//             .y0(function (d) {
-//                 console.log(d)
-//                 return yAxis(d[0]);
-//             })
-//             .y1(function (d) {
-//                 return yAxis(d[1]);
-//             })
-//         )
-
     var stackedData = d3.stack()
         .offset(d3.stackOffsetNone)
         .keys(keys)
-        (example)
+        (dataToBeStacked)
 
     // Show the areas
     svg
@@ -137,11 +111,20 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         .data(stackedData)
         .enter()
         .append("path")
-        .style("fill", function(d) { return color(d.key); })
+        .style("fill", function (d) {
+            return color(d.key);
+        })
         .attr("d", d3.area()
-            .x(function(d, i) { return xAxis(d.data.decade); })
-            .y0(function(d) { return yAxis(d[0]); })
-            .y1(function(d) { return yAxis(d[1]); })
+            .curve(d3.curveNatural)
+            .x(function (d, i) {
+                return xAxis(d.data.decade);
+            })
+            .y0(function (d) {
+                return yAxis(d[0]);
+            })
+            .y1(function (d) {
+                return yAxis(d[1]);
+            })
         )
 
 })
