@@ -52,8 +52,6 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         //add missing categories and initilize with zero
         for (prop in defaultObject) {
             if (!hasOwnProperty.call(a, prop)) {
-                console.log("object " + index)
-                console.log("proberty " + prop + " is missing")
                 dataToBeStacked[index][prop] = 0.5
             }
         }
@@ -79,7 +77,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(xAxis).tickPadding(5).tickFormat(d3.format("d")))
-            //.tickSize(-height)) --> würde Linien nach oben ziehen
+    //.tickSize(-height)) --> würde Linien nach oben ziehen
 
     svg.selectAll(".tickline").attr("stroke", "#b8b8b8")
 
@@ -93,7 +91,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
     //add y-axis lable
     svg.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("x",0 - (height / 2))
+        .attr("x", 0 - (height / 2))
         .attr("y", 0 - margin.left)
         .attr("dy", "14pt")
         .attr("font-family", "sans-serif")
@@ -125,6 +123,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         .attr("y", 200)
         .style("opacity", 0)
         .attr("class", "streamgraph-tooltip")
+
 
     // Three function that change the tooltip when user hover / move / leave a cell
     var mouseover = function (d) {
@@ -256,5 +255,33 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
             .attr("class", "streamgraph-txt-info-timeline")
             .text(line2);
     }
+
+
+    verticalTooltip = d3.select("div")
+        .append("div")
+        .attr("class", "remove")
+        .style("position", "absolute")
+        .style("z-index", "19")
+        .style("width", "1px")
+        .style("height", "421px")
+        .style("top", "28px")
+        .style("left", "68px")
+        .style("background", "#000000");
+
+    d3.select("svg")
+        .on("mousemove", function () {
+            mousex = d3.mouse(this);
+            mousex = mousex[0] + 5;
+            verticalTooltip.style("left", mousex + "px")
+        })
+        .on("mouseover", function () {
+            mousex = d3.mouse(this);
+            mousex = mousex[0] + 5;
+            verticalTooltip.style("left", mousex + "px")
+            verticalTooltip.style("display", "block")
+        })
+        .on("mouseleave", function () {
+            verticalTooltip.style("display", "none")
+        })
 
 })
