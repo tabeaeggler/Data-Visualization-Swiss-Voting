@@ -132,6 +132,10 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         d3.select(this)
             .style("stroke", "white")
             .style("opacity", 1)
+        d3.selectAll(".streamgraph-line-info-timeline")
+            .style("visibility", "hidden")
+        d3.selectAll(".streamgraph-txt-info-timeline")
+            .style("visibility", "hidden")
     }
     var mousemove = function (d, i) {
         grp = keys[i]
@@ -183,6 +187,11 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
             .style("opacity", 1)
             .style("stroke", "none")
         console.log("mouse has left")
+
+        d3.selectAll(".streamgraph-line-info-timeline")
+            .style("visibility", "visible")
+        d3.selectAll(".streamgraph-txt-info-timeline")
+            .style("visibility", "visible")
     }
 
     // Show the areas
@@ -229,7 +238,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
             .attr("x1", x)
             .attr("y1", y)
             .attr("x2", x)
-            .attr("y2", height)
+            .attr("y2", height);
 
 
         svg.append("text")
@@ -238,6 +247,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
             .attr('text-anchor', 'middle')
             .attr("font-family","sans-serif")
             .attr("font-size","13px")
+            .attr("class", "streamgraph-txt-info-timeline")
             .text(txt);
     }
 
