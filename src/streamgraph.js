@@ -223,6 +223,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
 
 
 
+    //TODO Tabea: richtige x und y Werte hinzufügen -> wird nach Tooltip fertiggestellt :)
     //add lines and text for info-timeline
     draw_lines_lb(260, 480, "Start", "1. WK");
     draw_lines_lb(260, 518, "Ende", "1. WK");
