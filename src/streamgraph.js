@@ -4,6 +4,8 @@ var margin = {top: 20, right: 30, bottom: 60, left: 60},
     height = 500 - margin.top - margin.bottom;
 
 var color1 = ['#001E50', '#026F94', '#018C9A', '#6BA99E', '#FDDFB1', '#FDAF6C', '#FF6B2D', '#FC3617'];
+var color2 = ['rgba(255, 26, 39, 1)', 'rgba(255, 26, 39, 0.92)', 'rgba(255, 26, 39, 0.84)','rgba(255, 26, 39, 0.76)', 'rgba(255, 26, 39, 0.68)','rgba(255, 26, 39, 0.60)', 'rgba(255, 26, 39, 0.52)', 'rgba(255, 26, 39, 0.44)', 'rgba(255, 26, 39, 0.36)', 'rgba(255, 26, 39, 0.28)', 'rgba(255, 26, 39, 0.20)', 'rgba(255, 26, 39, 0.12)' ];
+var color3 = ['#862f34', '#932d34', '#a42931', '#b62932', '#c8242f', '#e11a27', '#e43641', '#de4751', '#da555e', '#d8646c', '#da757c', '#dc8e93']
 
 // append the svg object to the body of the page
 var svg = d3.select("#streamgraph")
