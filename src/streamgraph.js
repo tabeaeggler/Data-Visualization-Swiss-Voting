@@ -225,33 +225,15 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
 
 
     //add lines and text for info-timeline
-    draw_lines(260, 1918, "Ende 1. WK");
-    draw_lines(220, 705, "Ende 2. WK");
-    draw_lines(50, 870, "Frauenstimmrecht");
-    draw_lines(120, 940, "Ölpreiskrise");
+    draw_lines_lb(260, 480, "Start", "1. WK");
+    draw_lines_lb(260, 518, "Ende", "1. WK");
+    draw_lines_lb(220, 665, "Start", "2. WK");
+    draw_lines_lb(220, 705, "Ende", "2. WK");
+    draw_lines_lb(50, 870, "","Frauenstimmrecht");
+    draw_lines_lb(120, 940, "","Ölpreiskrise");
     draw_lines_lb(340, 55, "Gründung des", "Bundesstaats");
     draw_lines_lb(290, 345, "Einführung der", "Volksinitiative");
     draw_lines_lb(20, 1070, "Totalrevision der", "Bundesverfassung");
-
-    //function to draw lines and add text (single line) for info-timeline
-    function draw_lines(y, x, txt){
-        svg.append("line")
-            .attr("class", "streamgraph-line-info-timeline")
-            .attr("x1", x)
-            .attr("y1", y)
-            .attr("x2", x)
-            .attr("y2", height);
-
-
-        svg.append("text")
-            .attr("y", y - 10)
-            .attr("x", x)
-            .attr('text-anchor', 'middle')
-            .attr("font-family","sans-serif")
-            .attr("font-size","13px")
-            .attr("class", "streamgraph-txt-info-timeline")
-            .text(txt);
-    }
 
     //function to draw lines and add text (with linebreak) for info-timeline
     function draw_lines_lb(y, x, line1, line2){
