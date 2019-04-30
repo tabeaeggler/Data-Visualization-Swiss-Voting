@@ -4,6 +4,18 @@
     font-size: 16pt;
 }
 
+.streamgraph-line-info-timeline {
+    stroke: black;
+    opacity: 10;
+    stroke-dasharray: 5, 3;
+}
+
+.streamgraph-txt-info-timeline {
+    text-anchor: middle;
+    font-family: Arial;
+    font-weight: lighter;
+    font-size: 13px;
+}
 .tick {
     z-index: 1000;
 }
