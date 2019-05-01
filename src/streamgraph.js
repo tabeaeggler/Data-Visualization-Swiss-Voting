@@ -4,6 +4,8 @@ var margin = {top: 20, right: 30, bottom: 60, left: 60},
     height = 500 - margin.top - margin.bottom;
 
 var color1 = ['#001E50', '#026F94', '#018C9A', '#6BA99E', '#FDDFB1', '#FDAF6C', '#FF6B2D', '#FC3617'];
+var color2 = ['rgba(255, 26, 39, 1)', 'rgba(255, 26, 39, 0.92)', 'rgba(255, 26, 39, 0.84)','rgba(255, 26, 39, 0.76)', 'rgba(255, 26, 39, 0.68)','rgba(255, 26, 39, 0.60)', 'rgba(255, 26, 39, 0.52)', 'rgba(255, 26, 39, 0.44)', 'rgba(255, 26, 39, 0.36)', 'rgba(255, 26, 39, 0.28)', 'rgba(255, 26, 39, 0.20)', 'rgba(255, 26, 39, 0.12)' ];
+var color3 = ['#862f34', '#932d34', '#a42931', '#b62932', '#c8242f', '#e11a27', '#e43641', '#de4751', '#da555e', '#d8646c', '#da757c', '#dc8e93']
 
 // append the svg object to the body of the page
 var svg = d3.select("#streamgraph")
@@ -41,6 +43,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         dataToBeStacked.push(temp);
     });
 
+
     //crate default object
     var defaultObject = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, decade: ""}
 
@@ -54,25 +57,20 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         }
         //add decade and set value
         dataToBeStacked[index].decade = nestedData[index].key.substr(0, nestedData[index].key.length - 7)
-
         if (index == dataToBeStacked.length - 1) {
-            dataToBeStacked[index].decade = "2020"
+            dataToBeStacked[index].decade = 2020
         }
     })
 
-    //only show values beginning with 1860
-    dataToBeStacked.splice(0, 1)
 
     const keys = d3.set(data.map(d => d.d1e1)).values();
-    //starting with 1860 --> befor only one vote
     const yearDomain = d3.extent(data, d => String(d.jahrzehnt).substr(0, d.jahrzehnt.length - 7));
-    yearDomain.splice(0, 1, "1860")
     const countDomain = [0, 110];
 
 
 // Add X axis
     var xAxis = d3.scaleLinear()
-        .domain(yearDomain) //remove first two values with no votes
+        .domain(yearDomain)
         .range([0, width])
         .nice()
 
@@ -121,8 +119,8 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
 
     var Tooltip = svg
         .append("text")
-        .attr("x", 50)
-        .attr("y", 50)
+        .attr("x", 350)
+        .attr("y", 200)
         .style("opacity", 0)
         .attr("class", "streamgraph-tooltip")
 
@@ -135,6 +133,10 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         d3.select(this)
             .style("stroke", "white")
             .style("opacity", 1)
+        d3.selectAll(".streamgraph-line-info-timeline")
+            .style("visibility", "hidden")
+        d3.selectAll(".streamgraph-txt-info-timeline")
+            .style("visibility", "hidden")
     }
     var mousemove = function (d, i) {
         grp = keys[i]
@@ -178,30 +180,19 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
             default:
 
         }
-        mouse = d3.mouse(this);
-        mousex = mouse[0];
-        var invertedx = xAxis.invert(mousex).toString();
-        var year
-        var count
-        d.forEach(function (f) {
-            if (f.data.decade.toString().charAt(0) === invertedx.charAt(0)
-                && f.data.decade.toString().charAt(1) === invertedx.charAt(1)
-                && f.data.decade.toString().charAt(2) === invertedx.charAt(2)
-                || invertedx > 2009) {
-
-                if (invertedx > 2009) year = "2010 - 2019"
-                else year = f.data.decade + " - " + (f.data.decade.substr(0, 3) + 9)
-
-                count = (f.data[keys[i]] === 0.5) ? 0 : f.data[keys[i]]
-            }
-        })
-        Tooltip.html(year + ": " + grp + " " + count + " Abstimmungen")
+        Tooltip.text(grp)
     }
     var mouseleave = function (d) {
         Tooltip.style("opacity", 0)
         d3.selectAll(".myArea")
             .style("opacity", 1)
             .style("stroke", "none")
+        console.log("mouse has left")
+
+        d3.selectAll(".streamgraph-line-info-timeline")
+            .style("visibility", "visible")
+        d3.selectAll(".streamgraph-txt-info-timeline")
+            .style("visibility", "visible")
     }
 
     // Show the areas
@@ -229,6 +220,42 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         .on("mouseover", mouseover)
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave)
+
+
+
+    //TODO Tabea: richtige x und y Werte hinzufügen -> wird nach Tooltip fertiggestellt :)
+    //add lines and text for info-timeline
+    draw_lines_lb(260, 480, "Start", "1. WK");
+    draw_lines_lb(260, 518, "Ende", "1. WK");
+    draw_lines_lb(220, 665, "Start", "2. WK");
+    draw_lines_lb(220, 705, "Ende", "2. WK");
+    draw_lines_lb(50, 870, "","Frauenstimmrecht");
+    draw_lines_lb(120, 940, "","Ölpreiskrise");
+    draw_lines_lb(340, 55, "Gründung des", "Bundesstaats");
+    draw_lines_lb(290, 345, "Einführung der", "Volksinitiative");
+    draw_lines_lb(20, 1070, "Totalrevision der", "Bundesverfassung");
+
+    //function to draw lines and add text (with linebreak) for info-timeline
+    function draw_lines_lb(y, x, line1, line2){
+        svg.append("line")
+            .attr("class", "streamgraph-line-info-timeline")
+            .attr("x1", x)
+            .attr("y1", y)
+            .attr("x2", x)
+            .attr("y2", height)
+
+        svg.append("text")
+            .attr("y", y - 25)
+            .attr("x", x)
+            .attr("class", "streamgraph-txt-info-timeline")
+            .text(line1);
+
+        svg.append("text")
+            .attr("y", y - 10)
+            .attr("x", x)
+            .attr("class", "streamgraph-txt-info-timeline")
+            .text(line2);
+    }
 
 
     verticalTooltip = d3.select("div")
