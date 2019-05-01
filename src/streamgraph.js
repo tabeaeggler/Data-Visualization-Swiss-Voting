@@ -125,10 +125,21 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         .append("div")
         .style("opacity", 0)
         .style("position", "absolute")
+        .style("right", "100px")
         .style("z-index", "19")
         .style("top", "28px")
-        .style("left", "68px")
         .attr("class", "streamgraph-tooltip")
+
+    verticalTooltip = d3.select("div")
+        .append("div")
+        .attr("class", "remove")
+        .style("position", "absolute")
+        .style("right", "100px")
+        .style("z-index", "19")
+        .style("width", "1px")
+        .style("height", "421px")
+        .style("top", "28px")
+        .style("background", "#000000");
 
 
     // Three function that change the tooltip when user hover / move / leave a cell
@@ -143,6 +154,12 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
             .style("visibility", "hidden")
         d3.selectAll(".streamgraph-txt-info-timeline")
             .style("visibility", "hidden")
+
+        mouse = d3.mouse(this);
+        mousex = mouse[0]
+        verticalTooltip.style("left", mousex + 65 + "px")
+        Tooltip.style("left", mousex + 65 + "px")
+        verticalTooltip.style("display", "block")
     }
     var mousemove = function (d, i) {
         grp = keys[i]
@@ -204,7 +221,8 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
             }
         })
 
-
+        verticalTooltip.style("left", mousex + 65 + "px")
+        Tooltip.style("left", mousex + 65 + "px")
         Tooltip.html(grp + "<br>" + "<p class='tooltip-paragraph'>" + year + ": " + count + " Abstimmungen" + "</p>")
 
     }
@@ -217,6 +235,8 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
             .style("visibility", "visible")
         d3.selectAll(".streamgraph-txt-info-timeline")
             .style("visibility", "visible")
+        verticalTooltip.style("display", "none")
+
     }
 
     // Show the areas
@@ -278,35 +298,5 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
             .attr("class", "streamgraph-txt-info-timeline")
             .text(line2);
     }
-
-
-    verticalTooltip = d3.select("div")
-        .append("div")
-        .attr("class", "remove")
-        .style("position", "absolute")
-        .style("z-index", "19")
-        .style("width", "1px")
-        .style("height", "421px")
-        .style("top", "28px")
-        .style("left", "68px")
-        .style("background", "#000000");
-
-    d3.select("svg")
-        .on("mousemove", function () {
-            mousex = d3.mouse(this);
-            mousex = mousex[0] + 5;
-            verticalTooltip.style("left", mousex + "px")
-            Tooltip.style("left", mousex + "px")
-        })
-        .on("mouseover", function () {
-            mousex = d3.mouse(this);
-            mousex = mousex[0] + 5;
-            verticalTooltip.style("left", mousex + "px")
-            Tooltip.style("left", mousex + "px")
-            verticalTooltip.style("display", "block")
-        })
-        .on("mouseleave", function () {
-            verticalTooltip.style("display", "none")
-        })
 
 })
