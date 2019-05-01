@@ -41,7 +41,6 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         dataToBeStacked.push(temp);
     });
 
-
     //crate default object
     var defaultObject = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, decade: ""}
 
@@ -55,20 +54,25 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         }
         //add decade and set value
         dataToBeStacked[index].decade = nestedData[index].key.substr(0, nestedData[index].key.length - 7)
+
         if (index == dataToBeStacked.length - 1) {
-            dataToBeStacked[index].decade = 2020
+            dataToBeStacked[index].decade = "2020"
         }
     })
 
+    //only show values beginning with 1860
+    dataToBeStacked.splice(0, 1)
 
     const keys = d3.set(data.map(d => d.d1e1)).values();
+    //starting with 1860 --> befor only one vote
     const yearDomain = d3.extent(data, d => String(d.jahrzehnt).substr(0, d.jahrzehnt.length - 7));
+    yearDomain.splice(0, 1, "1860")
     const countDomain = [0, 110];
 
 
 // Add X axis
     var xAxis = d3.scaleLinear()
-        .domain(yearDomain)
+        .domain(yearDomain) //remove first two values with no votes
         .range([0, width])
         .nice()
 
@@ -117,8 +121,8 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
 
     var Tooltip = svg
         .append("text")
-        .attr("x", 350)
-        .attr("y", 200)
+        .attr("x", 50)
+        .attr("y", 50)
         .style("opacity", 0)
         .attr("class", "streamgraph-tooltip")
 
@@ -174,14 +178,30 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
             default:
 
         }
-        Tooltip.text(grp)
+        mouse = d3.mouse(this);
+        mousex = mouse[0];
+        var invertedx = xAxis.invert(mousex).toString();
+        var year
+        var count
+        d.forEach(function (f) {
+            if (f.data.decade.toString().charAt(0) === invertedx.charAt(0)
+                && f.data.decade.toString().charAt(1) === invertedx.charAt(1)
+                && f.data.decade.toString().charAt(2) === invertedx.charAt(2)
+                || invertedx > 2009) {
+
+                if (invertedx > 2009) year = "2010 - 2019"
+                else year = f.data.decade + " - " + (f.data.decade.substr(0, 3) + 9)
+
+                count = (f.data[keys[i]] === 0.5) ? 0 : f.data[keys[i]]
+            }
+        })
+        Tooltip.html(year + ": " + grp + " " + count + " Abstimmungen")
     }
     var mouseleave = function (d) {
         Tooltip.style("opacity", 0)
         d3.selectAll(".myArea")
             .style("opacity", 1)
             .style("stroke", "none")
-        console.log("mouse has left")
     }
 
     // Show the areas
