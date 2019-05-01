@@ -1,7 +1,11 @@
 .streamgraph-tooltip {
     font-family: Arial;
     font-weight: lighter;
-    font-size: 16pt;
+    font-size: 14pt;
+    width: auto;
+    height: 100px;
+    margin-left: 5px;
+
 }
 
 .streamgraph-line-info-timeline {
@@ -18,4 +22,9 @@
 }
 .tick {
     z-index: 1000;
+}
+
+.tooltip-paragraph {
+    font-size: 10pt;
+    margin-top: 5px;
 }
