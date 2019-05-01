@@ -5,7 +5,7 @@
     width: auto;
     height: 100px;
     margin-left: 5px;
-
+    overflow: visible;
 }
 
 .streamgraph-line-info-timeline {
