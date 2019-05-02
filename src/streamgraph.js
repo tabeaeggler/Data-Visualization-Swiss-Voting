@@ -146,8 +146,6 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         var widthDonut = 70
         heightDonut = 70
         marginDonut = 0
-
-// The radius of the pieplot is half the width or half the height (smallest one). I substract a bit of margin.
         var radius = Math.min(widthDonut, heightDonut) / 2 - marginDonut
 
         var donut = d3.select(".streamgraph-tooltip")
@@ -161,6 +159,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
             current: count,
             all: countAll
         }
+
         var color = d3.scaleOrdinal()
             .domain(data)
             .range(["#FDDFB1", "#FDAF6C"])
@@ -175,12 +174,10 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
             .enter()
             .append('path')
             .attr('d', d3.arc()
-                .innerRadius(15)         // This is the size of the donut hole
+                .innerRadius(15)         // size of donut hole
                 .outerRadius(radius)
             )
             .attr('fill', function(d){ return(color(d.data.key)) })
-
-
     }
 
     // Three function that change the tooltip when user hover / move / leave a cell
@@ -264,15 +261,15 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
             }
         })
 
-        //delete decade for summing up
-        countAllArray.pop();
-        var countAll = countAllArray.reduce((total, current) => total + current, 0);
-
+        // show Tooltips
         verticalTooltip.style("left", mousex + 65 + "px")
         Tooltip.style("left", mousex + 65 + "px")
         Tooltip.html(grp + "<br>" + "<p class='tooltip-paragraph'>" + year + ": " + "<br>" +  count + " Abstimmungen" + "</p>")
 
         //show donut-chart
+        //delete decade for summing up
+        countAllArray.pop();
+        var countAll = countAllArray.reduce((total, current) => total + current, 0);
         donutChart(countAll, count)
 
     }
