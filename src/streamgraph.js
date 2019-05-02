@@ -140,6 +140,48 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         .style("top", "28px")
         .style("background", "#000000");
 
+    function donutChart(countAll, count) {
+        //Donut Chart for Tooltip
+        // set the dimensions and margins of the graph
+        var widthDonut = 70
+        heightDonut = 70
+        marginDonut = 0
+
+// The radius of the pieplot is half the width or half the height (smallest one). I substract a bit of margin.
+        var radius = Math.min(widthDonut, heightDonut) / 2 - marginDonut
+
+        var donut = d3.select(".streamgraph-tooltip")
+            .append("svg")
+            .attr("width", widthDonut)
+            .attr("height", heightDonut)
+            .append("g")
+            .attr("transform", "translate(" + widthDonut / 2 + "," + heightDonut / 2 + ")");
+
+        var data = {
+            current: count,
+            all: countAll
+        }
+        var color = d3.scaleOrdinal()
+            .domain(data)
+            .range(["#FDDFB1", "#FDAF6C"])
+
+        var pie = d3.pie()
+            .value(function(d) {return d.value; })
+        var dataForDisplay = pie(d3.entries(data))
+
+        donut
+            .selectAll('.streamgraph-tooltip')
+            .data(dataForDisplay   )
+            .enter()
+            .append('path')
+            .attr('d', d3.arc()
+                .innerRadius(15)         // This is the size of the donut hole
+                .outerRadius(radius)
+            )
+            .attr('fill', function(d){ return(color(d.data.key)) })
+
+
+    }
 
     // Three function that change the tooltip when user hover / move / leave a cell
     var mouseover = function (d) {
@@ -207,6 +249,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         var invertedx = xAxis.invert(mousex).toString();
         var year
         var count
+        var countAllArray;
         d.forEach(function (f) {
             if (f.data.decade.toString().charAt(0) === invertedx.charAt(0)
                 && f.data.decade.toString().charAt(1) === invertedx.charAt(1)
@@ -217,12 +260,20 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
                 else year = f.data.decade + " - " + (f.data.decade.substr(0, 3) + 9)
 
                 count = (f.data[keys[i]] === 0.5) ? 0 : f.data[keys[i]]
+                countAllArray = Object.values(f.data)
             }
         })
 
+        //delete decade for summing up
+        countAllArray.pop();
+        var countAll = countAllArray.reduce((total, current) => total + current, 0);
+
         verticalTooltip.style("left", mousex + 65 + "px")
         Tooltip.style("left", mousex + 65 + "px")
-        Tooltip.html(grp + "<br>" + "<p class='tooltip-paragraph'>" + year + ": " + count + " Abstimmungen" + "</p>")
+        Tooltip.html(grp + "<br>" + "<p class='tooltip-paragraph'>" + year + ": " + "<br>" +  count + " Abstimmungen" + "</p>")
+
+        //show donut-chart
+        donutChart(countAll, count)
 
     }
     var mouseleave = function (d) {
@@ -297,5 +348,6 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
             .attr("class", "streamgraph-txt-info-timeline")
             .text(line2);
     }
+
 
 })
