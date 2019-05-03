@@ -3,7 +3,7 @@ var margin = {top: 20, right: 30, bottom: 60, left: 60},
     width = 1300 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-var color1 = ['#001E50', '#026F94', '#018C9A', '#6BA99E', '#FDDFB1', '#FDAF6C', '#FF6B2D', '#FC3617'];
+var color1 = ['#001E50', '#026F94', '#018C9A', '#6BA99E', '#FDDFB1', '#FDAF6C', '#FF6B2D', '#FC3617', '#001E50', '#026F94', '#018C9A', '#6BA99E'];
 var color2 = ['rgba(255, 26, 39, 1)', 'rgba(255, 26, 39, 0.92)', 'rgba(255, 26, 39, 0.84)', 'rgba(255, 26, 39, 0.76)', 'rgba(255, 26, 39, 0.68)', 'rgba(255, 26, 39, 0.60)', 'rgba(255, 26, 39, 0.52)', 'rgba(255, 26, 39, 0.44)', 'rgba(255, 26, 39, 0.36)', 'rgba(255, 26, 39, 0.28)', 'rgba(255, 26, 39, 0.20)', 'rgba(255, 26, 39, 0.12)'];
 var color3 = ['#862f34', '#932d34', '#a42931', '#b62932', '#c8242f', '#e11a27', '#e43641', '#de4751', '#da555e', '#d8646c', '#da757c', '#dc8e93']
 
@@ -131,7 +131,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         .append("div")
         .attr("class", "remove")
 
-    function donutChart(countAll, count) {
+    function donutChart(countAll, count, colorIndex) {
         //Donut Chart for Tooltip
         // set the dimensions and margins of the graph
         var widthDonut = 70
@@ -151,10 +151,54 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
             all: countAll
         }
 
-
+        //Color for donutchart
+        setColor = colorIndex;
+        switch (setColor) {
+            case "1":
+                setColor = 0;
+                break;
+            case "2":
+                setColor = 8;
+                break;
+            case "3":
+                setColor = 4;
+                break;
+            case "4":
+                setColor = 3;
+                break;
+            case "5":
+                setColor = 9;
+                break;
+            case "6":
+                setColor = 2;
+                break;
+            case "7":
+                setColor = 10;
+                break;
+            case "8":
+                setColor = 5;
+                break;
+            case "9":
+                setColor = 11;
+                break;
+            case "10":
+                setColor = 6;
+                break;
+            case "11":
+                setColor = 7;
+                break;
+            case "12":
+                setColor = 1;
+                break;
+            default:
+        }
+        console.log("colorIndex" + colorIndex)
+        console.log("setColor" + setColor)
+        var col1 = color1[setColor];
+        var col2 = '#A9A9A9';
         var color = d3.scaleOrdinal()
             .domain(data)
-            .range(["#FDDFB1", "#FDAF6C"])
+            .range([col1, col2]);
 
         var pie = d3.pie()
             .value(function(d) {return d.value; })
@@ -267,7 +311,8 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         //delete decade for summing up
         countAllArray.pop();
         var countAll = countAllArray.reduce((total, current) => total + current, 0);
-        donutChart(countAll, count)
+        donutChart(countAll, count, (keys[i]))
+        console.log(grp)
 
         //Show percentage in donut chart
         var percentage = Math.round((100/countAll*count) * 100) / 100;
@@ -329,7 +374,6 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         .on("mouseover", mouseover)
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave)
-
 
     //TODO Tabea: richtige x und y Werte hinzufügen -> wird nach Tooltip fertiggestellt :)
     //add lines and text for info-timeline
