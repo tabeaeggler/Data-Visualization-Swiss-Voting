@@ -6,6 +6,16 @@
     height: 200px;
     margin-left: 5px;
     overflow: visible;
+    opacity: 0;
+    position: absolute;
+    z-index: 19;
+    top: 28px;
+}
+
+.txt-percentage {
+    font-family: Arial;
+    font-weight: lighter;
+    font-size: 9pt;
 }
 
 .streamgraph-line-info-timeline {
@@ -22,6 +32,16 @@
 }
 .tick {
     z-index: 1000;
+}
+
+.remove {
+position: absolute;
+display: none;
+z-index: 19;
+width: 1px;
+height: 421px;
+top: 28px;
+background: #000000;
 }
 
 .tooltip-paragraph {

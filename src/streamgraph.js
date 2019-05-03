@@ -66,7 +66,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
     dataToBeStacked.splice(0, 1)
 
     const keys = d3.set(data.map(d => d.d1e1)).values();
-    //starting with 1860 --> befor only one vote
+    //starting with 1860 --> before only one vote
     const yearDomain = d3.extent(data, d => String(d.jahrzehnt).substr(0, d.jahrzehnt.length - 7));
     yearDomain.splice(0, 1, "1860")
     const countDomain = [0, 110];
@@ -111,42 +111,33 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         .style("text-anchor", "middle")
         .text("Zeit");
 
-// color palette
+    // color palette
     var color = d3.scaleOrdinal()
         .domain(keys)
         .range(color1)
 
+    //stack data to create streamgraph
     var stackedData = d3.stack()
         .offset(d3.stackOffsetNone)
         .keys(keys)
         (dataToBeStacked)
 
+    //tooltip
     var Tooltip = d3.select("div")
         .append("div")
-        .style("opacity", 0)
-        .style("position", "absolute")
-        .style("z-index", "19")
-        .style("top", "28px")
         .attr("class", "streamgraph-tooltip")
 
     verticalTooltip = d3.select("div")
         .append("div")
         .attr("class", "remove")
-        .style("position", "absolute")
-        .style("display", "none")
-        .style("z-index", "19")
-        .style("width", "1px")
-        .style("height", "421px")
-        .style("top", "28px")
-        .style("background", "#000000");
 
     function donutChart(countAll, count) {
         //Donut Chart for Tooltip
         // set the dimensions and margins of the graph
         var widthDonut = 70
-        heightDonut = 70
-        marginDonut = 0
-        var radius = Math.min(widthDonut, heightDonut) / 2 - marginDonut
+        var heightDonut = 70
+        var marginDonut = 0
+        var radius = Math.min(widthDonut, heightDonut) / 2 - marginDonut;
 
         var donut = d3.select(".streamgraph-tooltip")
             .append("svg")
@@ -160,24 +151,27 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
             all: countAll
         }
 
+
         var color = d3.scaleOrdinal()
             .domain(data)
             .range(["#FDDFB1", "#FDAF6C"])
 
         var pie = d3.pie()
             .value(function(d) {return d.value; })
+
         var dataForDisplay = pie(d3.entries(data))
+
 
         donut
             .selectAll('.streamgraph-tooltip')
-            .data(dataForDisplay   )
+            .data(dataForDisplay)
             .enter()
             .append('path')
             .attr('d', d3.arc()
-                .innerRadius(15)         // size of donut hole
+                .innerRadius(23)         // size of donut hole
                 .outerRadius(radius)
             )
-            .attr('fill', function(d){ return(color(d.data.key)) })
+            .attr('fill', function(d){ return(color(d.data.key))})
     }
 
     // Three function that change the tooltip when user hover / move / leave a cell
@@ -188,6 +182,8 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         d3.select(this)
             .style("stroke", "white")
             .style("opacity", 1)
+
+        //set info-timeline to hidden
         d3.selectAll(".streamgraph-line-info-timeline")
             .style("visibility", "hidden")
         d3.selectAll(".streamgraph-txt-info-timeline")
@@ -196,8 +192,9 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         mouse = d3.mouse(this);
         mousex = mouse[0]
         verticalTooltip.style("left", mousex + 65 + "px")
-        Tooltip.style("left", mousex + 65 + "px")
         verticalTooltip.style("display", "block")
+        Tooltip.style("left", mousex + 65 + "px")
+
     }
     var mousemove = function (d, i) {
         grp = keys[i]
@@ -239,7 +236,6 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
                 grp = "Kultur, Religion, Medien";
                 break;
             default:
-
         }
         mouse = d3.mouse(this);
         mousex = mouse[0];
@@ -247,17 +243,18 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         var year
         var count
         var countAllArray;
+
         d.forEach(function (f) {
             if (f.data.decade.toString().charAt(0) === invertedx.charAt(0)
                 && f.data.decade.toString().charAt(1) === invertedx.charAt(1)
                 && f.data.decade.toString().charAt(2) === invertedx.charAt(2)
                 || invertedx > 2009) {
 
-                if (invertedx > 2009) year = "2010 - 2019"
-                else year = f.data.decade + " - " + (f.data.decade.substr(0, 3) + 9)
+                    if (invertedx > 2009) year = "2010 - 2019"
+                    else year = f.data.decade + " - " + (f.data.decade.substr(0, 3) + 9)
 
-                count = (f.data[keys[i]] === 0.5) ? 0 : f.data[keys[i]]
-                countAllArray = Object.values(f.data)
+                    count = (f.data[keys[i]] === 0.5) ? 0 : f.data[keys[i]]
+                    countAllArray = Object.values(f.data)
             }
         })
 
@@ -272,6 +269,24 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         var countAll = countAllArray.reduce((total, current) => total + current, 0);
         donutChart(countAll, count)
 
+        //Show percentage in donut chart
+        var percentage = Math.round((100/countAll*count) * 100) / 100;
+        //hide old percentage
+        d3.selectAll(".txt-percentage")
+            .style("visibility", "hidden")
+        //show new percentage
+        var txtPercentage = svg.append("text")
+            .attr("class", "txt-percentage")
+            .attr("dx", mousex + 37)
+            .attr("dy", 110)
+            .style("text-anchor", "middle")
+            .text(percentage + "%");
+
+        //set info-timeline to hidden
+        d3.selectAll(".streamgraph-line-info-timeline")
+            .style("visibility", "hidden")
+        d3.selectAll(".streamgraph-txt-info-timeline")
+            .style("visibility", "hidden")
     }
     var mouseleave = function (d) {
         Tooltip.style("opacity", 0)
@@ -283,6 +298,9 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         d3.selectAll(".streamgraph-txt-info-timeline")
             .style("visibility", "visible")
         verticalTooltip.style("display", "none")
+        //hide old percentage
+        d3.selectAll(".txt-percentage")
+            .style("visibility", "hidden")
 
     }
 
@@ -345,6 +363,4 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
             .attr("class", "streamgraph-txt-info-timeline")
             .text(line2);
     }
-
-
 })
