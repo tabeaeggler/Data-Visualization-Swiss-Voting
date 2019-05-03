@@ -12,6 +12,7 @@ var svg = d3.select("#streamgraph")
     .attr("transform",
         "translate(" + margin.left + "," + margin.top + ")");
 
+
 //*PREPARE DATA*
 // Convert CSV into an array of objects
 d3.csv("./data/Swissvote.csv").then(function (data) {
@@ -71,6 +72,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         .keys(keys)
         (dataToBeStacked)
 
+
     //*X AND Y AXIS*
     //Add X axis
     var xAxis = d3.scaleLinear()
@@ -110,11 +112,13 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         .style("text-anchor", "middle")
         .text("Zeit");
 
+
     //*COLOR PALETTE*
     var color1 = ['#001E50', '#026F94', '#018C9A', '#6BA99E', '#FDDFB1', '#FDAF6C', '#FF6B2D', '#FC3617', '#001E50', '#026F94', '#018C9A', '#6BA99E'];
     var color = d3.scaleOrdinal()
         .domain(keys)
         .range(color1)
+
 
     //*TOOLTIP*
     var Tooltip = d3.select("div")
@@ -206,6 +210,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
             )
             .attr('fill', function(d){ return(color(d.data.key))})
     }
+
 
     //*TOOLTIP HOVER / MOVE / LEAVE
     var mouseover = function (d) {
@@ -329,6 +334,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         d3.selectAll(".txt-percentage")
             .style("visibility", "hidden")
     }
+
 
     //*SHOW SVG STREAMGRAPH*
     svg
