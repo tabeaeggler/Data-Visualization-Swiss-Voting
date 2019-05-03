@@ -20,8 +20,8 @@
 
 .streamgraph-line-info-timeline {
     stroke: black;
-    opacity: 10;
-    stroke-dasharray: 5, 3;
+    stroke-width: 1;
+    stroke-dasharray: 4, 2;
 }
 
 .streamgraph-txt-info-timeline {

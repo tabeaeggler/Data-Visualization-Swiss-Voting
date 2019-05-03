@@ -192,8 +192,6 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
                 break;
             default:
         }
-        console.log("colorIndex" + colorIndex)
-        console.log("setColor" + setColor)
         var col1 = color1[setColor];
         var col2 = '#A9A9A9';
         var color = d3.scaleOrdinal()
@@ -312,7 +310,6 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         countAllArray.pop();
         var countAll = countAllArray.reduce((total, current) => total + current, 0);
         donutChart(countAll, count, (keys[i]))
-        console.log(grp)
 
         //Show percentage in donut chart
         var percentage = Math.round((100/countAll*count) * 100) / 100;
@@ -375,16 +372,14 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave)
 
-    //TODO Tabea: richtige x und y Werte hinzufügen -> wird nach Tooltip fertiggestellt :)
     //add lines and text for info-timeline
-    draw_lines_lb(260, 480, "Start", "1. WK");
-    draw_lines_lb(260, 518, "Ende", "1. WK");
-    draw_lines_lb(220, 665, "Start", "2. WK");
-    draw_lines_lb(220, 705, "Ende", "2. WK");
-    draw_lines_lb(50, 870, "", "Frauenstimmrecht");
-    draw_lines_lb(120, 940, "", "Ölpreiskrise");
-    draw_lines_lb(290, 345, "Einführung der", "Volksinitiative");
-    draw_lines_lb(20, 1070, "Totalrevision der", "Bundesverfassung");
+    draw_lines_lb(290, 400, "Start", "1. WK");
+    draw_lines_lb(250, 440, "Ende", "1. WK");
+    draw_lines_lb(260, 600, "Start", "2. WK");
+    draw_lines_lb(220, 650, "Ende", "2. WK");
+    draw_lines_lb(50, 834, "", "Frauenstimmrecht");
+    draw_lines_lb(120, 902, "", "Ölpreiskrise");
+    draw_lines_lb(20, 1053, "Totalrevision der", "Bundesverfassung");
 
     //function to draw lines and add text (with linebreak) for info-timeline
     function draw_lines_lb(y, x, line1, line2) {
@@ -396,13 +391,13 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
             .attr("y2", height)
 
         svg.append("text")
-            .attr("y", y - 25)
+            .attr("y", y - 20)
             .attr("x", x)
             .attr("class", "streamgraph-txt-info-timeline")
             .text(line1);
 
         svg.append("text")
-            .attr("y", y - 10)
+            .attr("y", y - 5)
             .attr("x", x)
             .attr("class", "streamgraph-txt-info-timeline")
             .text(line2);
