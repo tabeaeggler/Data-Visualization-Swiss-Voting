@@ -1,6 +1,6 @@
 // set the dimensions and margins of the graph
-var margin = {top: 20, right: 30, bottom: 60, left: 60},
-    width = 1300 - margin.left - margin.right,
+var margin = {top: 20, right: 60, bottom: 60, left: 60},
+    width = 1200 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
@@ -259,7 +259,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
                 grp = "Umwelt und Lebensraum";
                 break;
             case "10":
-                grp = "Soziale Fragen – Sozialpolitik";
+                grp = "Sozialpolitik";
                 break;
             case "11":
                 grp = "Bildung und Forschung";
@@ -272,6 +272,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         mouse = d3.mouse(this);
         mousex = mouse[0];
         var invertedx = xAxis.invert(mousex).toString();
+        console.log(invertedx);
         var year
         var count
         var countAllArray;
@@ -365,13 +366,13 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
 
     //*INFO-TIMELINE TEXT AND LINE
     //call functions
-    draw_lines_lb(290, 400, "Start", "1. WK");
-    draw_lines_lb(250, 440, "Ende", "1. WK");
-    draw_lines_lb(260, 600, "Start", "2. WK");
-    draw_lines_lb(220, 650, "Ende", "2. WK");
-    draw_lines_lb(50, 834, "", "Frauenstimmrecht");
-    draw_lines_lb(120, 902, "", "Ölpreiskrise");
-    draw_lines_lb(20, 1053, "Totalrevision der", "Bundesverfassung");
+    draw_lines_lb(300, 362, "Start", "1. WK");
+    draw_lines_lb(260, 395, "Ende", "1. WK");
+    draw_lines_lb(310, 532, "Start", "2. WK");
+    draw_lines_lb(220, 575, "Ende", "2. WK");
+    draw_lines_lb(50, 750, "", "Frauenstimmrecht");
+    draw_lines_lb(120, 805, "", "Ölpreiskrise");
+    draw_lines_lb(15, 940, "Totalrevision der", "Bundesverfassung");
 
     //function to draw lines and add text (with linebreak) for info-timeline
     function draw_lines_lb(y, x, line1, line2) {
