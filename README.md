@@ -1,18 +1,15 @@
-﻿# $Das Abstimmungsverhalten der letzten 150 Jahren
+﻿# Das Abstimmungsverhalten der letzten 150 Jahren
 
-Student 1: Hannah-Sarah Kuehne
-Student 2: Tabea Eggler
+Student 1: Hannah-Sarah Kuehne, Student 2: Tabea Eggler
 
-**Short description:**
- max. 200 chararcters.
-
-## Comments
-### Fragestellungen
+## Short description
+Wir wollen folgende Fragestellungen untersuchen:
 1) Was für Auswirkungen haben geschichtliche Ereignisse auf die Wahlergebnisse
 2) Wie hat sich das Abstimmungsverhalten der Schweizer Bevölkerung in den letzten 150 Jahren verändert?
 3) (optional) Veränderungen der Wahlbeteiligungen
 4) (optional) Parteivergelich anhand der Kategorie der lancierten Abstimmungen
 
+## Comments
 ### Aktueller Stand
 Wir haben die Frage 1 mit einem Streamgraph umgesetzt. Wir haben vor, noch eine weitere Grafik einzubinden.
 
