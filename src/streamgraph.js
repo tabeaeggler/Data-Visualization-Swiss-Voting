@@ -53,7 +53,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         }
         //add decade and set value
         dataToBeStacked[index].decade = nestedData[index].key.substr(0, nestedData[index].key.length - 7)
-        if (index == dataToBeStacked.length - 1) {
+        if (index === dataToBeStacked.length - 1) {
             dataToBeStacked[index].decade = "2020"
         }
     })
@@ -64,6 +64,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
     //starting with 1860 --> before only one vote
     const yearDomain = d3.extent(data, d => String(d.jahrzehnt).substr(0, d.jahrzehnt.length - 7));
     yearDomain.splice(0, 1, "1860")
+    console.log(yearDomain)
     const countDomain = [0, 110];
 
     //stack data to create streamgraph
@@ -82,7 +83,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
 
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(xAxis).tickPadding(5).tickFormat(d3.format("d")))
+        .call(d3.axisBottom(xAxis).tickPadding(5).tickFormat(d3.format("d")).ticks(16))
 
     svg.selectAll(".tickline").attr("stroke", "#b8b8b8")
 
