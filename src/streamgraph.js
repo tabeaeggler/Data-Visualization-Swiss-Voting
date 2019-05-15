@@ -40,7 +40,6 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         dataToBeStacked.push(temp);
     });
 
-    console.log(dataToBeStacked)
 
     //crate default object
     var defaultObject = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, decade: ""}
@@ -225,44 +224,6 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         d3.select(this)
             .style("stroke", "white")
             .style("opacity", 0.8)
-        /*svg
-            .append("rect")
-            .style("opacity", 1)
-            .style("background-color", "black")
-            .style("z-index", "1000")
-            .attr("x", xAxis(1980) )
-            .attr("y", yAxis(40) )
-            .attr("width", "30")
-            .attr("height", "30")*/
-
-        /*svg
-            .selectAll("mylayers")
-            .data(stackedData)
-            .enter()
-            .append("path")
-            .attr("class", "myArea")
-            .style("fill", function (d) {
-                return color(d.key);
-            })
-            .attr("d", d3.area()
-                .curve(d3.curveNatural)
-                .x(function (d) {
-                    return xAxis(d.data.decade);
-                })
-                .y0(function (d) {
-                    return yAxis(d[0]);
-                })
-                .y1(function (d) {
-                    return yAxis(d[1]);
-                })
-            )*/
-
-
-        mouse = d3.mouse(this);
-        mousex = mouse[0]
-        verticalTooltip.style("left", mousex + 65 + "px")
-        verticalTooltip.style("display", "block")
-        Tooltip.style("left", mousex + 65 + "px")
 
     }
     var mousemove = function (d, i) {
@@ -309,7 +270,6 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         mouse = d3.mouse(this);
         mousex = mouse[0];
         var invertedx = xAxis.invert(mousex).toString();
-        console.log(invertedx);
         var year
         var count
         var countAllArray;
@@ -329,8 +289,9 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         })
 
         // show Tooltips
-        verticalTooltip.style("left", mousex + 65 + "px")
-        Tooltip.style("left", mousex + 65 + "px")
+        verticalTooltip.style("left", mousex + 55 + "px")
+        verticalTooltip.style("display", "block")
+        Tooltip.style("left", mousex + 55 + "px")
         Tooltip.html(grp + "<br>" + "<p class='tooltip-paragraph'>" + year + ": " + "<br>" + count + " Abstimmungen" + "</p>")
 
         //delete decade for summing up
@@ -347,7 +308,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         var percentage = Math.round((100 / countAll * count) * 100) / 100;
         var txtPercentage = svg.append("text")
             .attr("class", "txt-percentage")
-            .attr("dx", mousex + 37)
+            .attr("dx", mousex + 27)
             .attr("dy", 110)
             .style("text-anchor", "middle")
             .text(percentage + "%");
