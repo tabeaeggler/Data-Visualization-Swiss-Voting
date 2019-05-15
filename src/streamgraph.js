@@ -289,9 +289,9 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         })
 
         // show Tooltips
-        verticalTooltip.style("left", mousex + 55 + "px")
+        verticalTooltip.style("left", mousex + 85 + "px")
         verticalTooltip.style("display", "block")
-        Tooltip.style("left", mousex + 55 + "px")
+        Tooltip.style("left", mousex + 85 + "px")
         Tooltip.html(grp + "<br>" + "<p class='tooltip-paragraph'>" + year + ": " + "<br>" + count + " Abstimmungen" + "</p>")
 
         //delete decade for summing up
@@ -308,7 +308,7 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
         var percentage = Math.round((100 / countAll * count) * 100) / 100;
         var txtPercentage = svg.append("text")
             .attr("class", "txt-percentage")
-            .attr("dx", mousex + 27)
+            .attr("dx", mousex + 57)
             .attr("dy", 110)
             .style("text-anchor", "middle")
             .text(percentage + "%");
