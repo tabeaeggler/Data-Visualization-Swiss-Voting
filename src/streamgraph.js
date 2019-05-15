@@ -218,7 +218,8 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
     //*TOOLTIP HOVER / MOVE / LEAVE
     var mouseover = function (d, i) {
         Tooltip.style("opacity", 1)
-
+        d3.selectAll(".streamgraph-tooltip")
+            .style("display", "inline")
         d3.selectAll(".myArea")
             .style("opacity", .2)
         d3.select(this)
@@ -360,6 +361,8 @@ d3.csv("./data/Swissvote.csv").then(function (data) {
 
     var mouseleave = function (d) {
         Tooltip.style("opacity", 0)
+        d3.selectAll(".streamgraph-tooltip")
+            .style("display", "none")
         d3.selectAll(".myArea")
             .style("opacity", 1)
             .style("stroke", "none")
