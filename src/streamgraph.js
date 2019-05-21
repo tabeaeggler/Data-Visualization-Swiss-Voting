@@ -15,7 +15,7 @@ var svg = d3.select("#streamgraph")
 
 //*PREPARE DATA*
 // Convert CSV into an array of objects
-d3.csv("./data/Swissvote.csv").then(function (data) {
+d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
     //nest data
     var nestedData = Array.from(d3.nest()
