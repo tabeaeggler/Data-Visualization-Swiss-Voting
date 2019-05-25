@@ -63,41 +63,108 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         .domain([0, mixed_data.length]) // input
         .range([0, width * 1.28]); // output
 
-    // Y scale
+    // Y scale for all data
     var yScale = d3.scaleLinear()
         .domain([0, d3.max(mixed_data, function(d) { return +d.value; })])
         .range([ height * 0.7, 0 ]);
     //svgLine.append("g").call(d3.axisLeft(yScale));
+
+    // all X and Y scale positions
+    var yPositions = new Array();
+    var xPositions = new Array();
+
+    // X and Y scale positions just for mountain top data
+    var yPositionsPeak = new Array();
+    var xPositionsPeak = new Array();
 
     // Append the path, bind the data, and call the line generator
     svgLine.append("path")
         .datum(mixed_data) // Binds data to the line
         .attr("class", "line")
         .attr("d", d3.line()
-            .x(function(d, i) { return xScale(i); }) // set the x values for the line generator
-            .y(function(d) { return yScale(d.value); }) // set the y values for the line generator
+            .x(function(d, i) {
+                xPositions.push(xScale(i))
+                return xScale(i); }) // set the x values for the line generator
+            .y(function(d) {
+                yPositions.push(yScale(d.value))
+                return yScale(d.value); }) // set the y values for the line generator
 
-        ); // Calls the line generator
+        )
+    ; // Calls the line generator
 
-    var xValues = new Array();
-    for(var i = 0; i < nested_data; i++){
-        xValues.push(xValues + 20);
+    // Y scale positions just for mountain top data -> all odd numbers
+    for (var i = 0; i < yPositions.length; i++){
+        if (i % 2 != 0){
+            yPositionsPeak.push(yPositions[i])
+        }
+    }
+    // X scale positions just for mountain top data -> all odd numbers
+    for (var i = 0; i < xPositions.length; i++){
+        if (i % 2 != 0){
+            xPositionsPeak.push(xPositions[i])
+        }
     }
 
-    console.log(xValues)
+    //draw lines from mountain peak
+    for (var i = 0; i < yPositionsPeak.length; i++) {
+        draw_lines(yPositionsPeak[i], xPositionsPeak[i], nested_data[i].key);
+    }
 
-    function draw_lines(y, x, line1) {
-        svg.append("line")
+
+    function draw_lines(y, x, txt) {
+        grp = txt
+        switch (grp) {
+            case "1":
+                grp = "Staatsordung";
+                break;
+            case "2":
+                grp = "Aussenpolitik";
+                break;
+            case "3":
+                grp = "Sicherheitspolitik";
+                break;
+            case "4":
+                grp = "Wirtschaft";
+                break;
+            case "5":
+                grp = "Landwirtschaft";
+                break;
+            case "6":
+                grp = "Öffentliche Finanzen";
+                break;
+            case "7":
+                grp = "Energie";
+                break;
+            case "8":
+                grp = "Verkehr und Infrastruktur";
+                break;
+            case "9":
+                grp = "Umwelt und Lebensraum";
+                break;
+            case "10":
+                grp = "Sozialpolitik";
+                break;
+            case "11":
+                grp = "Bildung und Forschung";
+                break;
+            case "12":
+                grp = "Kultur, Religion, Medien";
+                break;
+            default:
+        }
+        y2 = y - 5;
+        svgLine.append("line")
             .attr("class", "linegraph-line")
             .attr("x1", x)
-            .attr("y1", y)
+            .attr("y1", 0)
             .attr("x2", x)
-            .attr("y2", height)
+            .attr("y2", y - 5)
 
-        svg.append("text")
-            .attr("y", y - 20)
+        svgLine.append("text")
+            .attr("y", 0)
             .attr("x", x)
-            .text(line1);
+            .attr("class", "streamgraph-txt-info-timeline")
+            .text(grp);
     }
 
 

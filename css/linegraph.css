@@ -7,3 +7,9 @@
     fill: none;
     pointer-events: all;
 }
+
+.linegraph-line {
+    stroke: black;
+    stroke-width: 1;
+    stroke-dasharray: 4, 2;
+}
