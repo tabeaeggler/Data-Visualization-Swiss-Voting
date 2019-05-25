@@ -15,9 +15,6 @@ var svgCloud = d3.select("#wordcloud")
 // Convert CSV into an array of objects
 d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
-
-    var words = ["Armee", "Umweltpolitik", "Ausländerpolitik", "Flüchtlinge", "Stellung der Frau", "Homosexuelle", "Gentechnologie", "AHV", "Tierversuche", "Grundrechte"]
-    
     //nest data
     var nestedData1 = Array.from(d3.nest()
         .key(function (d) {
@@ -61,13 +58,47 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                 filteredDataSet[index].values = filteredDataSet[index].values.concat(el2.values)
             }
         });
+        switch (el1.key) {
+            case "3.21":
+                el1.key = "Armee";
+                break;
+            case "9.31":
+                el1.key = "Umweltpolitik";
+                break;
+            case "10.31":
+                el1.key = "Ausländerpolitik";
+                break;
+            case "10.32":
+                el1.key = "Flüchtlinge";
+                break;
+            case "10.33":
+                el1.key = "Stellung der Frau";
+                break;
+            case "10.38":
+                el1.key = "Homosexuelle";
+                break;
+            case "11.41":
+                el1.key = "Gentechnologie";
+                break;
+            case "10.21":
+                el1.key = "AHV";
+                break;
+            case "11.42":
+                el1.key = "Tierversuche";
+                break;
+            case "1.62":
+                el1.key = "Grundrechte";
+                break;
+            default:
+        }
     });
 
+    console.log(filteredDataSet)
 
     var layout = d3.layout.cloud()
         .size([width, height])
-        .words(words.map(function (d) {
-            return {text: d};
+        .words(filteredDataSet.map(function (d) {
+            return {text: d.key};
         }))
         .padding(5)
         .rotate(function () {
