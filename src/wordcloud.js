@@ -15,6 +15,15 @@ var svgCloud = d3.select("#wordcloud")
 // Convert CSV into an array of objects
 d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
+    //domain for x-axis
+    const yearDomain = d3.extent(data, d => String(d.jahrzehnt).substr(0, d.jahrzehnt.length - 7));
+    yearDomain.splice(0, 1, "1860")
+
+    var xAxis = d3.scaleLinear()
+        .domain(yearDomain)
+        .range([0, width])
+        .nice()
+
     //nest data
     var nestedData1 = Array.from(d3.nest()
         .key(function (d) {
@@ -50,7 +59,13 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
     });
 
     //join datafields with same category in one object
-    var filteredDataSet = [{key: "3.21", values:[]},{key: "9.31", values:[]}, {key: "10.31", values:[]}, {key: "10.32", values:[]}, {key: "10.33", values:[]}, {key: "10.38", values:[]},{key: "11.41", values:[]}, {key: "10.21", values:[]}, {key: "11.42", values:[]}, {key: "1.62", values:[]} ]
+    var filteredDataSet = [{key: "3.21", values: []}, {key: "9.31", values: []}, {
+        key: "10.31",
+        values: []
+    }, {key: "10.32", values: []}, {key: "10.33", values: []}, {key: "10.38", values: []}, {
+        key: "11.41",
+        values: []
+    }, {key: "10.21", values: []}, {key: "11.42", values: []}, {key: "1.62", values: []}]
 
     filteredDataSet.forEach(function (el1, index) {
         filteredData.forEach(function (el2) {
@@ -93,19 +108,22 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         }
     });
 
-    console.log(filteredDataSet)
+    var word_entries = d3.entries(filteredDataSet);
 
     var layout = d3.layout.cloud()
         .size([width, height])
-        .words(filteredDataSet.map(function (d) {
-            return {text: d.key};
-        }))
-        .padding(5)
+        .words(word_entries)
+        .text(function (d) {
+            return d.value.key;
+        })
+        .padding(10)
+        .fontSize(function (d) {
+            return d.value.values.length + 20
+        })
         .rotate(function () {
             return ~~(Math.random() * 2) * 90;
         })
-        .fontSize(30)
-        .on("end", draw);
+        .on("end", draw)
     layout.start();
 
 // This function takes the output of 'layout' above and draw the words
@@ -116,18 +134,39 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
             .selectAll("text")
             .data(words)
-            .enter().append("text")
+            .enter()
+            .append("text")
             .style("font-size", function (d) {
-                return d.size + "px";
+                return d.value.values.length + 20 + "px";
             })
             .style("font-family", "Arial")
             .attr("text-anchor", "middle")
             .attr("transform", function (d) {
                 return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
             })
+            .attr("padding", "100")
             .text(function (d) {
-                return d.text;
-            });
-        d3.layout.cloud().stop();
+                return d.value.key;
+            })
+            .on("mouseover", handleMouseOver)
+            .on('mouseout', handleMouseOut)
+            .on("click", click)
+
     }
+
+    function handleMouseOver(d) {
+        d3.select(this)
+            .style("opacity", 0.7)
+    }
+
+    function handleMouseOut(d) {
+        d3.select(this)
+            .style("opacity", 1)
+    }
+
+   function click(d) {
+       svgCloud.append("g")
+           .attr("transform", "translate(0," + height + ")")
+           .call(d3.axisBottom(xAxis).tickPadding(5).tickFormat(d3.format("d")).ticks(16))
+   }
 })
