@@ -1,5 +1,5 @@
 // set the dimensions and margins of the graph
-var margin = {top: 200, right: 60, bottom: 60, left: 60},
+var margin = {top: 200, right: 60, bottom: 100, left: 60},
     width = 1400 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
@@ -50,9 +50,6 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         return d.value;
     });
 
-
-
-
     //nest data (angneommen + abgelehnt)
     var acceptedData = d3.nest().key(function (d) {
         return d.status;
@@ -78,7 +75,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
     var xPositionsPeak = new Array();
 
     // Append the path, bind the data, and call the line generator
-    svgLine.append("path")
+    var path = svgLine.append("path")
         .datum(mixed_data) // Binds data to the line
         .attr("class", "line")
         .attr("d", d3.line()
@@ -107,11 +104,10 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
     //draw lines from mountain peak
     for (var i = 0; i < yPositionsPeak.length; i++) {
-        draw_lines(yPositionsPeak[i], xPositionsPeak[i], nested_data[i].key);
+        linesText = draw_lines(yPositionsPeak[i], xPositionsPeak[i], nested_data[i].key, nested_data[i].value);
     }
 
-
-    function draw_lines(y, x, txt) {
+    function draw_lines(y, x, txt, value) {
         grp = txt
         switch (grp) {
             case "1":
@@ -152,32 +148,75 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                 break;
             default:
         }
-        y2 = y - 5;
-        svgLine.append("line")
+
+        var test1 = svgLine.append("line")
+            .style('opacity', 0)
             .attr("class", "linegraph-line")
             .attr("x1", x)
             .attr("y1", -20)
             .attr("x2", x)
             .attr("y2", y - 5)
+            .transition()
+            .delay(2800)
+            .transition()
+            .duration(1000)
+            .style('opacity', 1)
+
+
 
         svgLine.append("text")
+            .style('opacity', 0)
             .attr("y", -27)
             .attr("x", x)
             .attr("transform", function (d) {
                 var xRot = d3.select(this).attr("x");
                 var yRot = d3.select(this).attr("y");
-                return `rotate(-50, ${xRot},  ${yRot} )` //ES6 template literal to set x and y rotation points
+                return `rotate(-57 ${xRot},  ${yRot} )`
             })
+            .transition()
+            .delay(2800)
+            .transition()
+            .duration(1000)
+            .style('opacity', 1)
             .text(grp);
+
+        svgLine.append("text")
+            .style('opacity', 0)
+            .attr("y", -27)
+            .attr("x", x + 20)
+            .attr("transform", function (d) {
+                var xRot = d3.select(this).attr("x");
+                var yRot = d3.select(this).attr("y");
+                return `rotate(-57, ${xRot},  ${yRot} )` //ES6 template literal to set x and y rotation points
+            })
+            .transition()
+            .delay(2800)
+            .transition()
+            .duration(1000)
+            .style('opacity', 1)
+            .text("(" + value + " Vorlagen" + ")");
     }
 
 
     var txtTotal = svgLine.append("text")
         .attr("class", "txt-Total")
-        .attr("x", 155)
-        .attr("y", 400)
+        .attr("x", 650)
+        .attr("y", 300)
         .style("text-anchor", "middle")
-        .text("Total Anzahl Abstimmungen: " + countAll);
+        .text("Total Anzahl Vorlagen: " + countAll);
+
+
+    //Animation
+    var totalLength = path.node().getTotalLength();
+
+    // Set Properties of Dash Array and Dash Offset and initiate Transition
+    path
+        .attr("stroke-dasharray", totalLength + " " + totalLength)
+        .attr("stroke-dashoffset", totalLength)
+        .transition()
+        .duration(3000)
+        .ease(d3.easeLinear)
+        .attr("stroke-dashoffset", 0);
 
 
     //TODO Checkbox
