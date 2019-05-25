@@ -149,7 +149,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             default:
         }
 
-        var test1 = svgLine.append("line")
+        svgLine.append("line")
             .style('opacity', 0)
             .attr("class", "linegraph-line")
             .attr("x1", x)
@@ -217,29 +217,6 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         .duration(3000)
         .ease(d3.easeLinear)
         .attr("stroke-dashoffset", 0);
-
-
-    //TODO Checkbox
-    d3.select("#checkbox-angenommen").on("change",updateAngenommen);
-    updateAngenommen();
-
-    d3.select("#checkbox-abgelehnt").on("change",updateAbgelehnt);
-    updateAbgelehnt();
-
-    function updateAngenommen() {
-        if (d3.select("#checkbox-angenommen").property("checked")) {
-            //TODO
-        } else {
-            //TODO
-        }
-    }
-    function updateAbgelehnt() {
-        if (d3.select("#checkbox-angenommen").property("checked")) {
-            //TODO
-        } else {
-            //TODO
-        }
-    }
 });
 
 
