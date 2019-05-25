@@ -1,5 +1,5 @@
 // set the dimensions and margins of the graph
-var margin = {top: 20, right: 60, bottom: 60, left: 60},
+var margin = {top: 200, right: 60, bottom: 60, left: 60},
     width = 1400 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
@@ -139,7 +139,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                 grp = "Verkehr und Infrastruktur";
                 break;
             case "9":
-                grp = "Umwelt und Lebensraum";
+                grp = "Umwelt";
                 break;
             case "10":
                 grp = "Sozialpolitik";
@@ -156,22 +156,26 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         svgLine.append("line")
             .attr("class", "linegraph-line")
             .attr("x1", x)
-            .attr("y1", 0)
+            .attr("y1", -20)
             .attr("x2", x)
             .attr("y2", y - 5)
 
         svgLine.append("text")
-            .attr("y", 0)
+            .attr("y", -27)
             .attr("x", x)
-            .attr("class", "streamgraph-txt-info-timeline")
+            .attr("transform", function (d) {
+                var xRot = d3.select(this).attr("x");
+                var yRot = d3.select(this).attr("y");
+                return `rotate(-50, ${xRot},  ${yRot} )` //ES6 template literal to set x and y rotation points
+            })
             .text(grp);
     }
 
 
     var txtTotal = svgLine.append("text")
         .attr("class", "txt-Total")
-        .attr("x", 157)
-        .attr("y", 0)
+        .attr("x", 155)
+        .attr("y", 400)
         .style("text-anchor", "middle")
         .text("Total Anzahl Abstimmungen: " + countAll);
 
