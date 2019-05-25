@@ -110,6 +110,8 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
     var word_entries = d3.entries(filteredDataSet);
 
+    console.log(word_entries, "entries")
+
     var layout = d3.layout.cloud()
         .size([width, height])
         .words(word_entries)
@@ -150,7 +152,30 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             })
             .on("mouseover", handleMouseOver)
             .on('mouseout', handleMouseOut)
-            .on("click", click)
+            .on("click", function (d) {
+
+                svgCloud.selectAll("circle").remove()
+
+                svgCloud.append("g")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(d3.axisBottom(xAxis).tickPadding(5).tickFormat(d3.format("d")).ticks(16))
+
+                var data_points = svgCloud.selectAll("circle")
+                    .data(d.value.values)
+                    .enter()
+                    .append("circle")
+                    .attr("class", "circle")
+                    .attr("cx", function(d) {
+                        var x
+                        d.values.forEach(function (a) {
+                            x =  xAxis(Number(a.datum.substr(a.datum.length -4, a.datum.length-1)))
+                        })
+                        return x
+                    })
+                    .attr("cy", height -20)
+                    .attr("r", 4)
+
+            })
 
     }
 
@@ -163,10 +188,4 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         d3.select(this)
             .style("opacity", 1)
     }
-
-   function click(d) {
-       svgCloud.append("g")
-           .attr("transform", "translate(0," + height + ")")
-           .call(d3.axisBottom(xAxis).tickPadding(5).tickFormat(d3.format("d")).ticks(16))
-   }
 })
