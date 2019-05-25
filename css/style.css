@@ -7,10 +7,15 @@
     font-style: normal;
 
 }
-h1 {
+h1{
     font-family: helveticaregular;
-    font-weight: lighter;
 }
+
+div {
+    margin-bottom: 10%;
+}
+
+
 /* Linegraph*/
 .line {
     fill: none;
@@ -26,6 +31,11 @@ h1 {
     stroke: black;
     stroke-width: 1;
     stroke-dasharray: 4, 2;
+}
+
+.linegraph-txt{
+    font-family: helveticaregular;
+    font-size: 85%;
 }
 
 /* Streamgraph*/

@@ -165,6 +165,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
 
         svgLine.append("text")
+            .attr("class", "linegraph-txt")
             .style('opacity', 0)
             .attr("y", -27)
             .attr("x", x)
@@ -181,6 +182,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             .text(grp);
 
         svgLine.append("text")
+            .attr("class", "linegraph-txt")
             .style('opacity', 0)
             .attr("y", -27)
             .attr("x", x + 20)
@@ -203,7 +205,8 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         .attr("x", 650)
         .attr("y", 300)
         .style("text-anchor", "middle")
-        .text("Total Anzahl Vorlagen: " + countAll);
+        .text("Total Anzahl Vorlagen: " + countAll)
+        .attr("class", "linegraph-txt");
 
 
     //Animation
