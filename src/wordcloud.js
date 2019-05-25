@@ -110,7 +110,10 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
     var word_entries = d3.entries(filteredDataSet);
 
-    console.log(word_entries, "entries")
+    var tooltip = d3.select("#wordcloud")
+        .append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
 
     var layout = d3.layout.cloud()
         .size([width, height])
@@ -160,20 +163,33 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                     .attr("transform", "translate(0," + height + ")")
                     .call(d3.axisBottom(xAxis).tickPadding(5).tickFormat(d3.format("d")).ticks(16))
 
-                var data_points = svgCloud.selectAll("circle")
+                svgCloud.selectAll("circle")
                     .data(d.value.values)
                     .enter()
                     .append("circle")
                     .attr("class", "circle")
-                    .attr("cx", function(d) {
+                    .attr("cx", function (d) {
                         var x
                         d.values.forEach(function (a) {
-                            x =  xAxis(Number(a.datum.substr(a.datum.length -4, a.datum.length-1)))
+                            x = xAxis(Number(a.datum.substr(a.datum.length - 4, a.datum.length - 1)))
                         })
                         return x
                     })
-                    .attr("cy", height -20)
+                    .attr("cy", height - 20)
                     .attr("r", 4)
+                    .on("mouseover", function(d) {
+                        tooltip.transition()
+                            .duration(200)
+                            .style("opacity", .9);
+                        tooltip	.html("fhallo")
+                            .style("left", (d3.event.pageX) + "px")
+                            .style("top", (d3.event.pageY - 28) + "px");
+                    })
+                    .on("mouseout", function(d) {
+                        tooltip.transition()
+                            .duration(500)
+                            .style("opacity", 0);
+                    });
 
             })
 
