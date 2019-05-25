@@ -1,3 +1,16 @@
+/*GENERAL HTML*/
+@font-face {
+    font-family: 'helveticaregular';
+    src: url('./fonts/helvetica-webfont.woff2') format('woff2'),
+    url('./fonts/helvetica-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+h1 {
+    font-family: helveticaregular;
+    font-weight: lighter;
+}
 /* Linegraph*/
 .line {
     fill: none;
@@ -81,3 +94,4 @@
     pointer-events: none;
     visibility: hidden;
 }
+
