@@ -1,3 +1,21 @@
+/* Linegraph*/
+.line {
+    fill: none;
+    stroke: #001E50;
+    stroke-width: 2;
+}
+.overlay {
+    fill: none;
+    pointer-events: all;
+}
+
+.linegraph-line {
+    stroke: black;
+    stroke-width: 1;
+    stroke-dasharray: 4, 2;
+}
+
+/* Streamgraph*/
 .streamgraph-tooltip {
     font-family: Arial;
     font-weight: lighter;
@@ -50,6 +68,7 @@
     margin-top: 5px;
 }
 
+/* Wordcloud*/
 .tooltip {
     position: absolute;
     text-align: left;
