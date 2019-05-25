@@ -3,18 +3,23 @@
 <head>
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/linegraph.css"/>
 </head>
 <body>
-<div id="linegraph"></div>
+
 <div id="streamgraph"></div>
 <div id="wordcloud"></div>
+<div id="linegraph"></div>
 
 <!-- Load d3.js -->
 <script src='lib/d3/d3.js'></script>
 <script src='lib/lodash.js'></script>
+<script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"></script>
+<input type="checkbox" id="checkbox-angenommen">Angenommene Abstimmungen <br>
+<input type="checkbox" id="checkbox-abgelehnt">Abgelehnte Abstimmungen
 <script src="src/linegraph.js"></script>
 <script src="src/streamgraph.js"></script>
 <script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"></script>
 <script src="src/wordcloud.js"></script>
 </body>
-</html>
+
