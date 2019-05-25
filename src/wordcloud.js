@@ -110,11 +110,6 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
     var word_entries = d3.entries(filteredDataSet);
 
-    var tooltip = d3.select("#wordcloud")
-        .append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
-
     var layout = d3.layout.cloud()
         .size([width, height])
         .words(word_entries)
@@ -177,19 +172,24 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                     })
                     .attr("cy", height - 20)
                     .attr("r", 4)
-                    .on("mouseover", function(d) {
-                        tooltip.transition()
-                            .duration(200)
-                            .style("opacity", .9);
-                        tooltip	.html("fhallo")
-                            .style("left", (d3.event.pageX) + "px")
-                            .style("top", (d3.event.pageY - 28) + "px");
-                    })
-                    .on("mouseout", function(d) {
-                        tooltip.transition()
-                            .duration(500)
-                            .style("opacity", 0);
-                    });
+
+                var tooltip = d3.select("#wordcloud")
+                    .append("div")
+                    .classed("tooltip", true);
+
+                d3.selectAll('circle')
+                    .on("mouseover", (d, i) => {
+                        tooltip
+                            .style("visibility", "visible")
+                            .style("left",(d3.event.pageX) + "px")
+                            .style("top", (d3.event.pageY - 50) + "px")
+                            .html(d.key);
+                    }).on("mouseout", (d,i) =>{
+                    tooltip
+                        .style("visibility", "hidden");
+                    verticalTooltip
+                        .style("visibility", "hidden");
+                });
 
             })
 
