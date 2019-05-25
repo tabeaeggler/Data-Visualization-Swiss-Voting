@@ -80,7 +80,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(xAxis).tickPadding(5).tickFormat(d3.format("d")).ticks(16))//.tickSize(-height))
+        .call(d3.axisBottom(xAxis).tickPadding(5).tickFormat(d3.format("d")).ticks(16))
 
     svg.selectAll(".tickline").attr("stroke", "#b8b8b8")
 

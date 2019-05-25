@@ -30,21 +30,35 @@
     font-weight: lighter;
     font-size: 13px;
 }
+
 .tick {
     z-index: 1000;
 }
 
 .remove {
-position: absolute;
-display: none;
-z-index: 19;
-width: 1px;
-height: 421px;
-top: 28px;
-background: #000000;
+    position: absolute;
+    display: none;
+    z-index: 19;
+    width: 1px;
+    height: 421px;
+    top: 28px;
+    background: #000000;
 }
 
 .tooltip-paragraph {
     font-size: 10pt;
     margin-top: 5px;
+}
+
+.tooltip {
+    position: absolute;
+    text-align: left;
+    width: auto;
+    height: 30px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: white;
+    border: 0px;
+    pointer-events: none;
+    visibility: hidden;
 }
