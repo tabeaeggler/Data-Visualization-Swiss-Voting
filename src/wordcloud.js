@@ -21,7 +21,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
     const yearDomain = d3.extent(data, d => String(d.jahrzehnt).substr(0, d.jahrzehnt.length - 7));
     yearDomain.splice(0, 1, "1860")
 
-    var xAxis = d3.scaleLinear()
+    var xAxisCloud = d3.scaleLinear()
         .domain(yearDomain)
         .range([0, width])
         .nice()
@@ -162,7 +162,6 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                 d3.select(this)
                     .style("opacity", 1)
             })
-            /* TODO HANNAH
             .on("click", function (d) {
                 d3.selectAll(".svg-cloud-text")
                     .style("fill","#595959" )
@@ -173,7 +172,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
                 svgCloud.append("g")
                     .attr("transform", "translate(0," + height + ")")
-                    .call(d3.axisBottom(xAxis).tickPadding(5).tickFormat(d3.format("d")).ticks(16))
+                    .call(d3.axisBottom(xAxisCloud).tickPadding(5).tickFormat(d3.format("d")).ticks(16))
 
                 svgCloud.selectAll("circle")
                     .data(d.value.values)
@@ -183,7 +182,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                     .attr("cx", function (d) {
                         var x
                         d.values.forEach(function (a) {
-                            x = xAxis(Number(a.datum.substr(a.datum.length - 4, a.datum.length - 1)))
+                            x = xAxisCloud(Number(a.datum.substr(a.datum.length - 4, a.datum.length - 1)))
                         })
                         return x
                     })
