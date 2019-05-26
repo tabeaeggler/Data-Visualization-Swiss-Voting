@@ -59,12 +59,12 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
     // X scale
     var xScale = d3.scaleLinear()
         .domain([0, mixed_data.length]) // input
-        .range([0, width * 1.28]); // output
+        .range([0, width * 1.25]); // output
 
     // Y scale for all data
     var yScale = d3.scaleLinear()
         .domain([0, d3.max(mixed_data, function(d) { return +d.value; })])
-        .range([ height * 0.6, 0 ]);
+        .range([ height * 0.55, 0 ]);
     //svgLine.append("g").call(d3.axisLeft(yScale));
 
     // all X and Y scale positions
