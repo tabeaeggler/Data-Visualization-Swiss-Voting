@@ -79,7 +79,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         .nice()
 
     svg.append("g")
-        .attr("transform", "translate(0," + height + ")")
+        .attr("transform", "translate(0," + height  + ")")
         .call(d3.axisBottom(xAxis).tickPadding(5).tickFormat(d3.format("d")).ticks(16))
 
     svg.selectAll(".tickline").attr("stroke", "#b8b8b8")
@@ -125,7 +125,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
     verticalTooltip = d3.select("div")
         .append("div")
-        .attr("class", "remove")
+        .attr("class", "tooltip-line")
 
     //Donut Chart for Tooltip
     function donutChart(countAll, count, colorIndex) {
@@ -308,8 +308,8 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         var percentage = Math.round((100 / countAll * count) * 100) / 100;
         var txtPercentage = svg.append("text")
             .attr("class", "txt-percentage")
-            .attr("dx", mousex + 57)
-            .attr("dy", 110)
+            .attr("dx", mousex + 65)
+            .attr("dy", 255)
             .style("text-anchor", "middle")
             .text(percentage + "%");
 
