@@ -1,16 +1,16 @@
 // set the dimensions and margins of the graph
-var margin = {top: 20, right: 60, bottom: 60, left: 60},
-    width = 1200 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+var marginStream = {top: 20, right: 60, bottom: 60, left: 60},
+    widthStream = 1200 - marginStream.left - marginStream.right,
+    heightStream = 500 - marginStream.top - marginStream.bottom;
 
 // append the svg object to the body of the page
 var svg = d3.select("#streamgraph")
     .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("width", widthStream + marginStream.left + marginStream.right)
+    .attr("height", heightStream + marginStream.top + marginStream.bottom)
     .append("g")
     .attr("transform",
-        "translate(" + margin.left + "," + margin.top + ")");
+        "translate(" + marginStream.left + "," + marginStream.top + ")");
 
 
 //*PREPARE DATA*
@@ -75,11 +75,11 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
     //Add X axis
     var xAxis = d3.scaleLinear()
         .domain(yearDomain)
-        .range([0, width])
+        .range([0, widthStream])
         .nice()
 
     svg.append("g")
-        .attr("transform", "translate(0," + height  + ")")
+        .attr("transform", "translate(0," + heightStream  + ")")
         .call(d3.axisBottom(xAxis).tickPadding(5).tickFormat(d3.format("d")).ticks(16))
 
     svg.selectAll(".tickline").attr("stroke", "#b8b8b8")
@@ -87,15 +87,15 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
     //Add Y axis
     var yAxis = d3.scaleLinear()
         .domain(countDomain)
-        .range([height, 0]);
+        .range([heightStream, 0]);
     svg.append("g")
         .call(d3.axisLeft(yAxis).tickPadding(2));
 
     //add Y axis label
     svg.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("x", 0 - (height / 2))
-        .attr("y", 0 - margin.left)
+        .attr("x", 0 - (heightStream / 2))
+        .attr("y", 0 - marginStream.left)
         .attr("dy", "14pt")
         .attr("font-family", "sans-serif")
         .style("text-anchor", "middle")
@@ -103,8 +103,8 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
     //add X axis label
     svg.append("text")
-        .attr("x", width - 10)
-        .attr("y", height + 30)
+        .attr("x", widthStream - 10)
+        .attr("y", heightStream + 30)
         .attr("dy", "14pt")
         .attr("font-family", "sans-serif")
         .style("text-anchor", "middle")
@@ -137,7 +137,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         var donut = d3.select(".streamgraph-tooltip")
             .append("svg")
             .attr("width", widthDonut)
-            .attr("height", heightDonut)
+            .attr("heigh", heightDonut)
             .append("g")
             .attr("transform", "translate(" + widthDonut / 2 + "," + heightDonut / 2 + ")");
 
@@ -389,7 +389,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             .attr("x1", x)
             .attr("y1", y)
             .attr("x2", x)
-            .attr("y2", height)
+            .attr("y2", heightStream)
 
         svg.append("text")
             .attr("y", y - 20)

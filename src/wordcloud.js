@@ -1,29 +1,29 @@
 // set the dimensions and margins of the graph
-var margin = {top: 20, right: 120, bottom: 70, left: 120},
-    width = 1150 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+var marginCloud = {top: 20, right: 120, bottom: 70, left: 120},
+    widthCloud = 1150 - marginCloud.left - marginCloud.right,
+    heightCloud = 600 - marginCloud.top - marginCloud.bottom;
 
 // append the svg object to the body of the page
 var svgCloud = d3.select("#wordcloud")
     .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("width", widthCloud + marginCloud.left + marginCloud.right)
+    .attr("height", heightCloud + marginCloud.top + marginCloud.bottom)
     .attr("class", "cloud-words-container")
     .append("g")
     .attr("transform",
-        "translate(" + margin.left + "," + margin.top + ")");
+        "translate(" + marginCloud.left + "," + marginCloud.top + ")");
 
 //*PREPARE DATA*
 // Convert CSV into an array of objects
 d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
     //domain for x-axis
-    const yearDomain = d3.extent(data, d => String(d.jahrzehnt).substr(0, d.jahrzehnt.length - 7));
-    yearDomain.splice(0, 1, "1860")
+    var yDomain = d3.extent(data, d => String(d.jahrzehnt).substr(0, d.jahrzehnt.length - 7));
+    yDomain.splice(0, 1, "1860")
 
     var xAxisCloud = d3.scaleLinear()
-        .domain(yearDomain)
-        .range([0, width])
+        .domain(yDomain)
+        .range([0, widthCloud])
         .nice()
 
     //nest data
@@ -118,7 +118,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
     console.log(word_entries)
 
     var layout = d3.layout.cloud()
-        .size([width, height - 100])
+        .size([widthCloud, heightCloud - 100])
         .words(word_entries)
         .text(function (d) {
             return d.value.key;
@@ -171,7 +171,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                 svgCloud.selectAll("circle").remove()
 
                 svgCloud.append("g")
-                    .attr("transform", "translate(0," + height + ")")
+                    .attr("transform", "translate(0," + heightCloud + ")")
                     .call(d3.axisBottom(xAxisCloud).tickPadding(5).tickFormat(d3.format("d")).ticks(16))
 
                 svgCloud.selectAll("circle")
@@ -186,7 +186,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                         })
                         return x
                     })
-                    .attr("cy", height - 20)
+                    .attr("cy", heightCloud - 20)
                     .attr("r", 5)
                     .style("fill", function (d) {
                         var x
@@ -240,7 +240,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         function createLegend() {
             var legend = svgCloud.append("g")
                 .attr("id", "legend")
-                .attr("transform", "translate(" + (width) + "," + (height) + ")")
+                .attr("transform", "translate(" + (widthCloud) + "," + (heightCloud) + ")")
 
             legend
                 .append("circle")
