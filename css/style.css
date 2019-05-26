@@ -114,6 +114,7 @@ h1 {
     color: #fff;
     border-radius: 2px;
     font: 14px sans-serif;
+    visibility: hidden;
 }
 
 

@@ -197,10 +197,11 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
                 d3.selectAll('circle')
                     .on("mouseover", (d, i) => {
-                        if(d.key.length < 100) {
+                        console.log(d.key.length)
+                        if(d.key.length < 90) {
                             tooltip
                                 .classed("tooltip-short", true)
-                        } else {
+                        } else if(d.key.length > 90){
                             tooltip
                                 .classed("tooltip-long", true)
                         }
@@ -211,8 +212,6 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                             .html(d.key);
                     }).on("mouseout", (d, i) => {
                     tooltip
-                        .style("visibility", "hidden");
-                    verticalTooltip
                         .style("visibility", "hidden");
                 });
 
