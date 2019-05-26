@@ -25,10 +25,30 @@ h1{
     text-align: center;
 }
 
+#intro-text-container {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#intro-text {
+    font-family: helveticaregular;
+    font-weight: lighter;
+    color: #595959;
+    font-size: 130%;
+    text-align: center;
+}
+
 
 /* Linegraph*/
 #linegraph {
-    margin-bottom: 15%;
+    margin-bottom: 7%;
+    width: 100%;
+}
+
+.linegraph-container {
+    display: table;
+    margin: 0 auto;
 }
 
 .line {
@@ -55,7 +75,7 @@ h1{
 
 .txt-total {
     font-family: helveticaregular;
-    font-size: 120%;
+    font-size: 85%;
     fill: #595959;
 }
 
@@ -115,6 +135,16 @@ h1{
 }
 
 /* Wordcloud*/
+#wordcloud {
+    margin-top: 10%;
+    width: 100%;
+}
+
+.cloud-words-container{
+    display: table;
+    margin: 0 auto;
+}
+
 .tooltip-short {
     position: absolute;
     text-align: left;
@@ -147,6 +177,11 @@ h1{
     color: #fff;
     border-radius: 2px;
     font: 14px sans-serif;
+}
+
+.svg-cloud {
+    fill: #595959;
+    font-family: helveticaregular;
 }
 
 

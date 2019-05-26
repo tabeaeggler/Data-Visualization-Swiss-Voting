@@ -1,5 +1,5 @@
 // set the dimensions and margins of the graph
-var margin = {top: 20, right: 60, bottom: 60, left: 60},
+var margin = {top: 20, right: 120, bottom: 60, left: 120},
     width = 1200 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
 
@@ -8,9 +8,11 @@ var svgCloud = d3.select("#wordcloud")
     .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
+    .attr("class", "cloud-words-container")
     .append("g")
     .attr("transform",
         "translate(" + margin.left + "," + margin.top + ")");
+
 //*PREPARE DATA*
 // Convert CSV into an array of objects
 d3.csv("./data/SwissvoteV2.csv").then(function (data) {
@@ -143,7 +145,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             .style("font-size", function (d) {
                 return d.value.values.length + 15 + "px";
             })
-            .style("font-family", "Arial")
+            .attr("class", "svg-cloud")
             .attr("text-anchor", "middle")
             .attr("transform", function (d) {
                 return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
@@ -154,7 +156,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             })
             .on("mouseover", function (d) {
                 d3.select(this)
-                    .style("opacity", 0.7)
+                    .style("opacity", 0.6)
             })
             .on('mouseout', function (d) {
                 d3.select(this)
