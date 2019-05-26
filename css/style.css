@@ -33,7 +33,7 @@ body {
     font-size: 240%;
 }
 
-#h1-streamgraph{
+#h1-streamgraph {
     font-family: 'Open Sans Condensed', sans-serif;
     font-weight: lighter;
     padding-top: 5%;
@@ -42,7 +42,16 @@ body {
     font-size: 240%;
 }
 
-#title-container{
+#h1-word-cloud {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: lighter;
+    padding-top: 5%;
+    padding-bottom: 0%;
+    color: #595959;
+    font-size: 250%;
+}
+
+.title-container{
     margin-right: auto;
     margin-left: auto;
     width: 40%;
@@ -53,11 +62,11 @@ body {
 #linegraph {
     margin-bottom: 7%;
     width: 100%;
+    text-align: center;
 }
 
 .linegraph-container {
-    display: table;
-    margin: 0 auto;
+    display: inline-block;
     margin-top: -100px;
 }
 
@@ -179,7 +188,7 @@ body {
     position: absolute;
     text-align: left;
     width: 300px;
-    height: 75px;
+    height: 90px;
     font: 12px sans-serif;
     border: 0px;
     visibility: hidden;
@@ -201,5 +210,11 @@ body {
     fill: #595959;
     font-family: 'Open Sans Condensed', sans-serif;
 }
+
+#legend {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 10pt;
+}
+
 
 

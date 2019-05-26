@@ -1,7 +1,7 @@
 // set the dimensions and margins of the graph
-var margin = {top: 20, right: 120, bottom: 60, left: 120},
-    width = 1200 - margin.left - margin.right,
-    height = 630 - margin.top - margin.bottom;
+var margin = {top: 20, right: 120, bottom: 70, left: 120},
+    width = 1150 - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 var svgCloud = d3.select("#wordcloud")
@@ -166,7 +166,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                 d3.selectAll(".svg-cloud-text")
                     .style("fill","#595959" )
                 d3.select(this)
-                    .style("fill", '#FF6B2D')
+                    .style("fill", '#FFFFFF')
 
                 svgCloud.selectAll("circle").remove()
 
@@ -187,7 +187,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                         return x
                     })
                     .attr("cy", height - 20)
-                    .attr("r", 4)
+                    .attr("r", 5)
                     .style("fill", function (d) {
                         var x
                         d.values.forEach(function (a) {
@@ -209,13 +209,13 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                                 .classed("tooltip-short", true)
                                 .classed("tooltip-long", false)
                                 .classed("tooltip-extra-long", false)
-                        } else if (d.key.length > 66 && d.key.length < 120) {
+                        } else if (d.key.length > 66 && d.key.length < 130) {
                             console.log("long")
                             tooltip
                                 .classed("tooltip-long", true)
                                 .classed("tooltip-short", false)
                                 .classed("tooltip-extra-long", false)
-                        } else if (d.key.length >= 120 && d.key.length < 200) {
+                        } else if (d.key.length >= 130) {
                             console.log("long")
                             tooltip
                                 .classed("tooltip-long", false)
@@ -226,7 +226,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                         tooltip
                             .style("visibility", "visible")
                             .style("left", (d3.event.pageX) + "px")
-                            .style("top", (d3.event.pageY - 100) + "px")
+                            .style("top", (d3.event.pageY - 115) + "px")
                             .html(d.key);
                     }).on("mouseout", (d, i) => {
                     tooltip
@@ -245,25 +245,25 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             legend
                 .append("circle")
                 .attr("cx", 0)
-                .attr("cy", 40)
-                .attr("r", 4)
+                .attr("cy", 48)
+                .attr("r", 5)
                 .style("fill", '#018C9A')
             legend
                 .append("text")
                 .text("angenommene Abstimmungen")
-                .attr("x", -175)
-                .attr("y", 43)
+                .attr("x", -165)
+                .attr("y", 51)
             legend
                 .append("circle")
                 .attr("cx", 0)
-                .attr("cy", 55)
-                .attr("r", 4)
+                .attr("cy", 63)
+                .attr("r", 5)
                 .style("fill", '#FF6B2D')
             legend
                 .append("text")
                 .text("abgelehnte Abstimmungen")
-                .attr("x", -175)
-                .attr("y", 58)
+                .attr("x", -165)
+                .attr("y", 66)
         }
 
     }
