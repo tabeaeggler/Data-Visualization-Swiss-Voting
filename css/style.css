@@ -136,14 +136,14 @@ h1{
 }
 
 /* Wordcloud*/
+
 #wordcloud {
-    margin-top: 10%;
     width: 100%;
+    text-align: center;
 }
 
 .cloud-words-container{
-    display: table;
-    margin: 0 auto;
+    display: inline-block;
 }
 
 .tooltip-short {
