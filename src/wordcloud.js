@@ -111,7 +111,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
     var word_entries = d3.entries(filteredDataSet);
 
     var layout = d3.layout.cloud()
-        .size([width, height])
+        .size([width, 350])
         .words(word_entries)
         .text(function (d) {
             return d.value.key;
@@ -126,11 +126,11 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         .on("end", draw)
     layout.start();
 
-// This function takes the output of 'layout' above and draw the words
-// Better not to touch it. To change parameters, play with the 'layout' variable above
+
     function draw(words) {
         svgCloud
             .append("g")
+            .attr("class", "word-container")
             .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
             .selectAll("text")
             .data(words)
@@ -172,6 +172,14 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                     })
                     .attr("cy", height - 20)
                     .attr("r", 4)
+                    .style("fill", function (d) {
+                        var x
+                        d.values.forEach(function (a) {
+                            if(a.annahme === "0") x = '#FF6B2D'
+                            else x = '#018C9A'
+                        })
+                        return x
+                    })
 
                 var tooltip = d3.select("#wordcloud")
                     .append("div")
