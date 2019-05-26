@@ -1,7 +1,7 @@
 // set the dimensions and margins of the graph
 var margin = {top: 200, right: 60, bottom: 100, left: 60},
     width = 1400 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    height = 580 - margin.top - margin.bottom;
 
 // Add the SVG to the page
 var svgLine = d3.select("#linegraph").append("svg")
@@ -165,6 +165,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
 
         svgLine.append("text")
+            .attr("class", "linegraph-txt")
             .style('opacity', 0)
             .attr("y", -27)
             .attr("x", x)
@@ -180,7 +181,9 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             .style('opacity', 1)
             .text(grp);
 
+
         svgLine.append("text")
+            .attr("class", "linegraph-txt")
             .style('opacity', 0)
             .attr("y", -27)
             .attr("x", x + 20)
@@ -199,11 +202,11 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
 
     var txtTotal = svgLine.append("text")
-        .attr("class", "txt-Total")
-        .attr("x", 650)
-        .attr("y", 300)
+        .attr("x", 660)
+        .attr("y", 350)
         .style("text-anchor", "middle")
-        .text("Total Anzahl Vorlagen: " + countAll);
+        .text("Total Anzahl Vorlagen: " + countAll)
+        .attr("class", "txt-total");
 
 
     //Animation
