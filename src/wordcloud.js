@@ -1,7 +1,7 @@
 // set the dimensions and margins of the graph
 var margin = {top: 20, right: 60, bottom: 60, left: 60},
     width = 1200 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+    height = 630 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 var svgCloud = d3.select("#wordcloud")
@@ -198,17 +198,29 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                 d3.selectAll('circle')
                     .on("mouseover", (d, i) => {
                         console.log(d.key.length)
-                        if(d.key.length < 90) {
+                        if (d.key.length <= 66) {
                             tooltip
                                 .classed("tooltip-short", true)
-                        } else if(d.key.length > 90){
+                                .classed("tooltip-long", false)
+                                .classed("tooltip-extra-long", false)
+                        } else if (d.key.length > 66 && d.key.length < 120) {
+                            console.log("long")
                             tooltip
                                 .classed("tooltip-long", true)
+                                .classed("tooltip-short", false)
+                                .classed("tooltip-extra-long", false)
+                        } else if (d.key.length >= 120 && d.key.length < 200) {
+                            console.log("long")
+                            tooltip
+                                .classed("tooltip-long", false)
+                                .classed("tooltip-short", false)
+                                .classed("tooltip-extra-long", true)
+
                         }
                         tooltip
                             .style("visibility", "visible")
                             .style("left", (d3.event.pageX) + "px")
-                            .style("top", (d3.event.pageY - 80) + "px")
+                            .style("top", (d3.event.pageY - 100) + "px")
                             .html(d.key);
                     }).on("mouseout", (d, i) => {
                     tooltip

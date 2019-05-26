@@ -119,10 +119,8 @@ h1{
     position: absolute;
     text-align: left;
     width: 200px;
-    height: 30px;
-    padding: 2px;
+    height: 45px;
     font: 12px sans-serif;
-    background: white;
     border: 0px;
     visibility: hidden;
 }
@@ -130,14 +128,23 @@ h1{
 .tooltip-long {
     position: absolute;
     text-align: left;
-    width: 200px;
+    width: 250px;
     height: 60px;
-    padding: 2px;
     font: 12px sans-serif;
-    background: white;
     border: 0px;
     visibility: hidden;
 }
+
+.tooltip-extra-long {
+    position: absolute;
+    text-align: left;
+    width: 300px;
+    height: 75px;
+    font: 12px sans-serif;
+    border: 0px;
+    visibility: hidden;
+}
+
 
 .d3-tip {
     line-height: 1;
