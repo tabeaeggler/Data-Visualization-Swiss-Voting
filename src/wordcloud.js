@@ -1,7 +1,7 @@
 // set the dimensions and margins of the graph
 var margin = {top: 20, right: 60, bottom: 60, left: 60},
     width = 1200 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    height = 600 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 var svgCloud = d3.select("#wordcloud")
@@ -55,11 +55,11 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
     //filter data
     var filteredData = unfilteredData.filter(function (value, index, arr) {
-        return value.key === "3.21" || value.key === "9.31" || value.key === "10.31" || value.key === "10.32" || value.key === "10.33" || value.key === "10.38" || value.key === "11.41" || value.key === "10.21" || value.key === "11.42" || value.key === "1.62";
+        return value.key === "3.23" || value.key === "2.22" || value.key === "9.31" || value.key === "10.31" || value.key === "10.32" || value.key === "10.33" || value.key === "10.38" || value.key === "11.41" || value.key === "10.21" || value.key === "11.42" || value.key === "1.62";
     });
 
     //join datafields with same category in one object
-    var filteredDataSet = [{key: "3.21", values: []}, {key: "9.31", values: []}, {
+    var filteredDataSet = [{key: "3.23", values: []}, {key: "2.22", values: []}, {key: "9.31", values: []}, {
         key: "10.31",
         values: []
     }, {key: "10.32", values: []}, {key: "10.33", values: []}, {key: "10.38", values: []}, {
@@ -74,8 +74,11 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             }
         });
         switch (el1.key) {
-            case "3.21":
-                el1.key = "Armee";
+            case "3.23":
+                el1.key = "Rüstung";
+                break;
+            case "2.22":
+                el1.key = "EU";
                 break;
             case "9.31":
                 el1.key = "Umweltpolitik";
@@ -110,15 +113,17 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
     var word_entries = d3.entries(filteredDataSet);
 
+    console.log(word_entries)
+
     var layout = d3.layout.cloud()
-        .size([width, height])
+        .size([width, height - 100])
         .words(word_entries)
         .text(function (d) {
             return d.value.key;
         })
         .padding(10)
         .fontSize(function (d) {
-            return d.value.values.length + 20
+            return d.value.values.length + 15
         })
         .rotate(function () {
             return ~~(Math.random() * 2) * 90;
@@ -126,8 +131,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         .on("end", draw)
     layout.start();
 
-// This function takes the output of 'layout' above and draw the words
-// Better not to touch it. To change parameters, play with the 'layout' variable above
+
     function draw(words) {
         svgCloud
             .append("g")
@@ -137,7 +141,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             .enter()
             .append("text")
             .style("font-size", function (d) {
-                return d.value.values.length + 20 + "px";
+                return d.value.values.length + 15 + "px";
             })
             .style("font-family", "Arial")
             .attr("text-anchor", "middle")
@@ -148,8 +152,14 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             .text(function (d) {
                 return d.value.key;
             })
-            .on("mouseover", handleMouseOver)
-            .on('mouseout', handleMouseOut)
+            .on("mouseover", function (d) {
+                d3.select(this)
+                    .style("opacity", 0.7)
+            })
+            .on('mouseout', function (d) {
+                d3.select(this)
+                    .style("opacity", 1)
+            })
             .on("click", function (d) {
 
                 svgCloud.selectAll("circle").remove()
@@ -172,19 +182,34 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                     })
                     .attr("cy", height - 20)
                     .attr("r", 4)
+                    .style("fill", function (d) {
+                        var x
+                        d.values.forEach(function (a) {
+                            if (a.annahme === "0") x = '#FF6B2D'
+                            else x = '#018C9A'
+                        })
+                        return x
+                    })
 
                 var tooltip = d3.select("#wordcloud")
                     .append("div")
-                    .classed("tooltip", true);
+                    .classed("d3-tip", true);
 
                 d3.selectAll('circle')
                     .on("mouseover", (d, i) => {
+                        if(d.key.length < 100) {
+                            tooltip
+                                .classed("tooltip-short", true)
+                        } else {
+                            tooltip
+                                .classed("tooltip-long", true)
+                        }
                         tooltip
                             .style("visibility", "visible")
-                            .style("left",(d3.event.pageX) + "px")
-                            .style("top", (d3.event.pageY - 50) + "px")
+                            .style("left", (d3.event.pageX) + "px")
+                            .style("top", (d3.event.pageY - 80) + "px")
                             .html(d.key);
-                    }).on("mouseout", (d,i) =>{
+                    }).on("mouseout", (d, i) => {
                     tooltip
                         .style("visibility", "hidden");
                     verticalTooltip
@@ -193,15 +218,5 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
             })
 
-    }
-
-    function handleMouseOver(d) {
-        d3.select(this)
-            .style("opacity", 0.7)
-    }
-
-    function handleMouseOut(d) {
-        d3.select(this)
-            .style("opacity", 1)
     }
 })
