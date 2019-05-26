@@ -162,12 +162,13 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                 d3.select(this)
                     .style("opacity", 1)
             })
+            /* TODO HANNAH
             .on("click", function (d) {
                 d3.selectAll(".svg-cloud-text")
                     .style("fill","#595959" )
                 d3.select(this)
                     .style("fill", '#FF6B2D')
-
+*/
                 svgCloud.selectAll("circle").remove()
 
                 svgCloud.append("g")
