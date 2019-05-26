@@ -8,6 +8,7 @@ var svg = d3.select("#streamgraph")
     .append("svg")
     .attr("width", widthStream + marginStream.left + marginStream.right)
     .attr("height", heightStream + marginStream.top + marginStream.bottom)
+    .attr("class", "streamgraph-container")
     .append("g")
     .attr("transform",
         "translate(" + marginStream.left + "," + marginStream.top + ")");
