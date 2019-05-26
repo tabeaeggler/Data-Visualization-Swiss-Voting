@@ -309,7 +309,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         var txtPercentage = svg.append("text")
             .attr("class", "txt-percentage")
             .attr("dx", mousex + 65)
-            .attr("dy", 255)
+            .attr("dy", 125)
             .style("text-anchor", "middle")
             .text(percentage + "%");
 
