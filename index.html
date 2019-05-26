@@ -3,20 +3,37 @@
 <head>
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/pageable@latest/dist/pageable.min.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&display=swap" rel="stylesheet">
+
 </head>
 <body>
-<div id="title-container">
-    <h1>Das Abstimmungsverhalten der letzten 150 Jahre in der Schweiz</h1>
+
+
+
+
+<div id="container">
+    <div data-anchor="linegraph" class="pageable-1">
+        <div id="title-container">
+            <h1>Das Abstimmungsverhalten der letzten 150 Jahre in der Schweiz</h1>
+        </div>
+        <div id="linegraph"></div>
+    </div>
+    <div data-anchor="wordcloud" class="pageable-3">
+        <div id="intro-text-container">
+            <p id="intro-text">Unsere Visualisierungen geben einen Einblick in die verschiedenen Themengebiete, über welche die Schweizer Bürger seit der Gründung des modernen Bundesstaates abgestimmt haben.</p>
+        </div>
+        <div id="wordcloud"></div>
+    </div>
+    <div data-anchor="streamgraph" class="pageable-2">
+        <div id="streamgraph"></div>
+    </div>
 </div>
-<div id="linegraph"></div>
-<div id="intro-text-container">
-    <p id="intro-text">Unsere Visualisierungen geben einen Einblick in die verschiedenen Themengebiete, über welche die Schweizer Bürger seit der Gründung des modernen Bundesstaates abgestimmt haben.</p>
-</div>
-<div id="wordcloud"></div>
-<div id="streamgraph"></div>
 
 
 
+<script src="https://unpkg.com/pageable@latest/dist/pageable.min.js"></script>
+<script src="src/pageable.js"></script>
 <script src='lib/d3/d3.js'></script>
 <script src='lib/lodash.js'></script>
 <script src="src/linegraph.js"></script>
