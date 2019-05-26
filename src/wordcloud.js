@@ -145,7 +145,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             .style("font-size", function (d) {
                 return d.value.values.length + 15 + "px";
             })
-            .attr("class", "svg-cloud")
+            .attr("class", "svg-cloud-text")
             .attr("text-anchor", "middle")
             .attr("transform", function (d) {
                 return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
@@ -163,6 +163,8 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                     .style("opacity", 1)
             })
             .on("click", function (d) {
+                d3.selectAll(".svg-cloud-text")
+                    .style("fill","#595959" )
                 d3.select(this)
                     .style("fill", '#FF6B2D')
 
