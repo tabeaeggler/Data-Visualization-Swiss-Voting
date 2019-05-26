@@ -204,8 +204,8 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
     var txtTotal = svgLine.append("text")
         .style('opacity', 0)
-        .attr("x", 1101)
-        .attr("y", 380)
+        .attr("x", 590)
+        .attr("y", 350)
         .style("text-anchor", "middle")
         .text("Total Anzahl Vorlagen: " + countAll)
         .transition()
