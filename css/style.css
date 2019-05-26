@@ -82,16 +82,38 @@ h1 {
 }
 
 /* Wordcloud*/
-.tooltip {
+.tooltip-short {
     position: absolute;
     text-align: left;
-    width: auto;
+    width: 200px;
     height: 30px;
     padding: 2px;
     font: 12px sans-serif;
     background: white;
     border: 0px;
-    pointer-events: none;
     visibility: hidden;
 }
+
+.tooltip-long {
+    position: absolute;
+    text-align: left;
+    width: 200px;
+    height: 60px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: white;
+    border: 0px;
+    visibility: hidden;
+}
+
+.d3-tip {
+    line-height: 1;
+    font-weight: bold;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+    font: 14px sans-serif;
+}
+
 
