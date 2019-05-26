@@ -156,15 +156,19 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             })
             .on("mouseover", function (d) {
                 d3.select(this)
-                    .style("opacity", 0.6)
+                    .style("opacity", 0.5)
             })
             .on('mouseout', function (d) {
                 d3.select(this)
                     .style("opacity", 1)
             })
             .on("click", function (d) {
+                d3.select(this)
+                    .style("fill", '#FF6B2D')
 
                 svgCloud.selectAll("circle").remove()
+
+                createLegend()
 
                 svgCloud.append("g")
                     .attr("transform", "translate(0," + height + ")")
@@ -197,7 +201,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                     .append("div")
                     .classed("d3-tip", true);
 
-                d3.selectAll('circle')
+                d3.selectAll(".circle")
                     .on("mouseover", (d, i) => {
                         console.log(d.key.length)
                         if (d.key.length <= 66) {
@@ -230,6 +234,35 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                 });
 
             })
+
+        function createLegend() {
+            var legend = svgCloud.append("g")
+                .attr("id", "legend")
+                .attr("transform", "translate(" + (width) + "," + (height) + ")")
+
+            legend
+                .append("circle")
+                .attr("cx", 0)
+                .attr("cy", 40)
+                .attr("r", 4)
+                .style("fill", '#018C9A')
+            legend
+                .append("text")
+                .text("angenommene Abstimmungen")
+                .attr("x", -175)
+                .attr("y", 43)
+            legend
+                .append("circle")
+                .attr("cx", 0)
+                .attr("cy", 55)
+                .attr("r", 4)
+                .style("fill", '#FF6B2D')
+            legend
+                .append("text")
+                .text("abgelehnte Abstimmungen")
+                .attr("x", -175)
+                .attr("y", 58)
+        }
 
     }
 })
