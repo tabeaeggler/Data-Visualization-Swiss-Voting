@@ -1,6 +1,6 @@
 new Pageable("#container", {
     childSelector: "[data-anchor]", // CSS3 selector string for the pages
-    anchors: ["linegraph", "wordcloud", "streamgraph"], // define the page anchors
+    anchors: ["anchor-1", "anchor-2", "anchor-3"], // define the page anchors
     pips: true, // display the pips
     animation: 300, // the duration in ms of the scroll animation
     delay: 0, // the delay in ms before the scroll animation starts

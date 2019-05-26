@@ -1,6 +1,6 @@
 // set the dimensions and margins of the graph
 var margin = {top: 200, right: 60, bottom: 100, left: 60},
-    width = 1300 - margin.left - margin.right,
+    width = 1350 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
 
 // Add the SVG to the page
@@ -59,12 +59,12 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
     // X scale
     var xScale = d3.scaleLinear()
         .domain([0, mixed_data.length]) // input
-        .range([0, width * 1.25]); // output
+        .range([0, width ]); // output
 
     // Y scale for all data
     var yScale = d3.scaleLinear()
         .domain([0, d3.max(mixed_data, function(d) { return +d.value; })])
-        .range([ height * 0.55, 0 ]);
+        .range([ height, 0 ]);
     //svgLine.append("g").call(d3.axisLeft(yScale));
 
     // all X and Y scale positions
@@ -163,8 +163,6 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             .duration(1000)
             .style('opacity', 1)
 
-
-
         svgLine.append("text")
             .attr("class", "linegraph-txt")
             .style('opacity', 0)
@@ -181,7 +179,6 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             .duration(1000)
             .style('opacity', 1)
             .text(grp);
-
 
         svgLine.append("text")
             .attr("class", "linegraph-txt")
@@ -201,7 +198,6 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             .text("(" + value + " Vorlagen" + ")");
     }
 
-
     var txtTotal = svgLine.append("text")
         .style('opacity', 0)
         .attr("x", 590)
@@ -214,7 +210,6 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         .duration(1000)
         .style('opacity', 1)
         .attr("class", "txt-total");
-
 
     //Animation
     var totalLength = path.node().getTotalLength();
