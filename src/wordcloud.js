@@ -197,7 +197,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                         return x
                     })
 
-                var tooltip = d3.select("#wordcloud")
+                var tooltipCloud = d3.select("#wordcloud")
                     .append("div")
                     .classed("d3-tip", true);
 
@@ -205,31 +205,31 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                     .on("mouseover", (d, i) => {
                         console.log(d.key.length)
                         if (d.key.length <= 66) {
-                            tooltip
+                            tooltipCloud
                                 .classed("tooltip-short", true)
                                 .classed("tooltip-long", false)
                                 .classed("tooltip-extra-long", false)
                         } else if (d.key.length > 66 && d.key.length < 130) {
                             console.log("long")
-                            tooltip
+                            tooltipCloud
                                 .classed("tooltip-long", true)
                                 .classed("tooltip-short", false)
                                 .classed("tooltip-extra-long", false)
                         } else if (d.key.length >= 130) {
                             console.log("long")
-                            tooltip
+                            tooltipCloud
                                 .classed("tooltip-long", false)
                                 .classed("tooltip-short", false)
                                 .classed("tooltip-extra-long", true)
 
                         }
-                        tooltip
+                        tooltipCloud
                             .style("visibility", "visible")
                             .style("left", (d3.event.pageX) + "px")
-                            .style("top", (d3.event.pageY - 115) + "px")
+                            .style("top", (d3.event.pageY - 110) + "px")
                             .html(d.key);
                     }).on("mouseout", (d, i) => {
-                    tooltip
+                    tooltipCloud
                         .style("visibility", "hidden");
                 });
 
