@@ -170,8 +170,6 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
                 svgCloud.selectAll("circle").remove()
 
-                createLegend()
-
                 svgCloud.append("g")
                     .attr("transform", "translate(0," + height + ")")
                     .call(d3.axisBottom(xAxis).tickPadding(5).tickFormat(d3.format("d")).ticks(16))
@@ -234,6 +232,8 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                     tooltip
                         .style("visibility", "hidden");
                 });
+
+                createLegend()
 
             })
 
