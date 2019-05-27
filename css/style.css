@@ -70,7 +70,10 @@
 
 .cat-container {
     width: 130px;
-    margin: 8% auto;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    margin-left: -65px;
 }
 
 .cat-wrapper {
