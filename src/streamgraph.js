@@ -3,7 +3,7 @@ var marginStream = {top: 20, right: 60, bottom: 60, left: 60},
     widthStream = 1200 - marginStream.left - marginStream.right,
     heightStream = 500 - marginStream.top - marginStream.bottom;
 
-// append the svg object to the body of the page
+// append the svg object to its container
 var svg = d3.select("#streamgraph")
     .append("svg")
     .attr("width", widthStream + marginStream.left + marginStream.right)
