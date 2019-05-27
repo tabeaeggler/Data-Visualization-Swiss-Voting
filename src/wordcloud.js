@@ -171,11 +171,11 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             .text(function (d) {
                 return d.value.key;
             })
-            .on("mouseover", function (d) {
+            .on("mouseover", function () {
                 d3.select(this)
                     .style("opacity", 0.5)
             })
-            .on('mouseout', function (d) {
+            .on('mouseout', function () {
                 d3.select(this)
                     .style("opacity", 1)
             })
@@ -226,7 +226,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                     .classed("d3-tip", true);
 
                 d3.selectAll(".circle")
-                    .on("mouseover", (d, i) => {
+                    .on("mouseover", (d) => {
                         //change size of tooltip according to size of text
                         if (d.key.length <= 66) {
                             tooltipCloud
@@ -251,7 +251,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY - 110) + "px")
                             .html(d.key);
-                    }).on("mouseout", (d, i) => {
+                    }).on("mouseout", () => {
                     tooltipCloud
                         .style("visibility", "hidden");
                 });
