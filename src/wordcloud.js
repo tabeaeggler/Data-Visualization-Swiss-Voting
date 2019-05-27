@@ -130,6 +130,9 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
     });
 
     //*CREATE WORDCLOUD*
+    //Credits to: https://www.d3-graph-gallery.com/graph/wordcloud_size.html
+    //--> the following wordcloud implementation was inspired by the above mentioned source
+    //--> some parts were copied and some adjusted for our own purpose
 
     var word_entries = d3.entries(filteredDataSet);
 
@@ -223,7 +226,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                 //add tooltip
                 var tooltipCloud = d3.select("#wordcloud")
                     .append("div")
-                    .classed("d3-tip", true);
+                    .classed("tip", true);
 
                 d3.selectAll(".circle")
                     .on("mouseover", (d) => {

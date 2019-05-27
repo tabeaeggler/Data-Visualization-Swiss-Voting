@@ -115,6 +115,9 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
 
     //*TOOLTIP*
+    //Credits to: http://bl.ocks.org/WillTurman/4631136
+    //--> the following tooltip implementation was inspired by the above mentioned source
+    //--> some parts were copied and some adjusted for our own purpose
     var Tooltip = d3.select("div")
         .append("div")
         .attr("class", "streamgraph-tooltip");
@@ -124,6 +127,9 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         .attr("class", "tooltip-line");
 
     //Donut Chart for Tooltip
+    //Credits to: https://www.d3-graph-gallery.com/graph/donut_basic.html
+    //--> the following donut chart implementation was inspired by the above mentioned source
+    //--> some parts were copied and some adjusted for our own purpose
     function donutChart(countAll, count, colorIndex) {
         var widthDonut = 70,
             heightDonut = 70,
@@ -353,6 +359,9 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
 
     //*SHOW SVG STREAMGRAPH*
+    //Credits to: https://www.d3-graph-gallery.com/graph/streamgraph_basic.html
+    //--> the following streamgraph implementation was inspired by the above mentioned source
+    //--> some parts were copied and some adjusted for our own purpose
     svg
         .selectAll("mylayers")
         .data(stackedData)
