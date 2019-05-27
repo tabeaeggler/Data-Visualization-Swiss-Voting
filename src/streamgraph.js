@@ -29,47 +29,49 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         .rollup(function (v) {
             return v.length;
         })
-        .entries(data))
+        .entries(data));
 
     //map values of nested data into a onedimensional array of objects
-    var dataToBeStacked = []
+    var dataToBeStacked = [];
     nestedData.forEach(d => {
-        var temp = {}
+        var temp = {};
         d.values.forEach(e => {
             temp[e.key] = e.value;
-        })
+        });
         dataToBeStacked.push(temp);
     });
 
-
     //crate default object
-    var defaultObject = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, decade: ""}
+    var defaultObject = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, decade: ""};
 
     //fill missing values
     dataToBeStacked.forEach(function (a, index) {
         //add missing categories and initilize with zero
         for (prop in defaultObject) {
             if (!hasOwnProperty.call(a, prop)) {
-                dataToBeStacked[index][prop] = 0.5
+                dataToBeStacked[index][prop] = 0.5;
             }
         }
         //add decade and set value
-        dataToBeStacked[index].decade = nestedData[index].key.substr(0, nestedData[index].key.length - 7)
-    })
+        dataToBeStacked[index].decade = nestedData[index].key.substr(0, nestedData[index].key.length - 7);
+    });
 
     //only show values beginning with 1860
-    dataToBeStacked.splice(0, 1)
+    dataToBeStacked.splice(0, 1);
+
     const keys = d3.set(data.map(d => d.d1e1)).values();
+
     //starting with 1860 --> before only one vote
     const yearDomain = d3.extent(data, d => String(d.jahrzehnt).substr(0, d.jahrzehnt.length - 7));
-    yearDomain.splice(0, 1, "1860")
+    yearDomain.splice(0, 1, "1860");
+
     const countDomain = [0, 110];
 
     //stack data to create streamgraph
     var stackedData = d3.stack()
         .offset(d3.stackOffsetNone)
         .keys(keys)
-        (dataToBeStacked)
+        (dataToBeStacked);
 
 
     //*X AND Y AXIS*
@@ -77,18 +79,20 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
     var xAxis = d3.scaleLinear()
         .domain(yearDomain)
         .range([0, widthStream])
-        .nice()
+        .nice();
 
     svg.append("g")
         .attr("transform", "translate(0," + heightStream  + ")")
-        .call(d3.axisBottom(xAxis).tickPadding(5).tickFormat(d3.format("d")).ticks(16))
+        .call(d3.axisBottom(xAxis).tickPadding(5).tickFormat(d3.format("d")).ticks(16));
 
-    svg.selectAll(".tickline").attr("stroke", "#b8b8b8")
+    //add history lines
+    svg.selectAll(".tickline").attr("stroke", "#b8b8b8");
 
     //Add Y axis
     var yAxis = d3.scaleLinear()
         .domain(countDomain)
         .range([heightStream, 0]);
+
     svg.append("g")
         .call(d3.axisLeft(yAxis).tickPadding(2));
 
@@ -102,38 +106,29 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         .style("text-anchor", "middle")
         .text("Anzahl Abstimmungen");
 
-    //add X axis label
-    svg.append("text")
-        .attr("x", widthStream - 10)
-        .attr("y", heightStream + 30)
-        .attr("dy", "14pt")
-        .attr("font-family", "sans-serif")
-        .style("text-anchor", "middle")
-        .text("Zeit");
-
 
     //*COLOR PALETTE*
     var color1 = ['#001E50', '#026F94', '#018C9A', '#6BA99E', '#FDDFB1', '#FDAF6C', '#FF6B2D', '#FC3617', '#001E50', '#026F94', '#018C9A', '#6BA99E'];
     var color = d3.scaleOrdinal()
         .domain(keys)
-        .range(color1)
+        .range(color1);
 
 
     //*TOOLTIP*
     var Tooltip = d3.select("div")
         .append("div")
-        .attr("class", "streamgraph-tooltip")
+        .attr("class", "streamgraph-tooltip");
 
-    verticalTooltip = d3.select("div")
+    var verticalTooltip = d3.select("div")
         .append("div")
-        .attr("class", "tooltip-line")
+        .attr("class", "tooltip-line");
 
     //Donut Chart for Tooltip
     function donutChart(countAll, count, colorIndex) {
-        var widthDonut = 70
-        var heightDonut = 70
-        var marginDonut = 0
-        var radius = Math.min(widthDonut, heightDonut) / 2 - marginDonut;
+        var widthDonut = 70,
+            heightDonut = 70,
+            marginDonut = 0,
+            radius = Math.min(widthDonut, heightDonut) / 2 - marginDonut;
 
         var donut = d3.select(".streamgraph-tooltip")
             .append("svg")
@@ -145,7 +140,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         var data = {
             current: count,
             all: countAll
-        }
+        };
 
         //Color for donutchart
         calculatedColorIndex = colorIndex;
@@ -188,6 +183,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                 break;
             default:
         }
+
         var color = d3.scaleOrdinal()
             .domain(data)
             .range([color1[calculatedColorIndex], '#A9A9A9']);
@@ -195,9 +191,9 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         var pie = d3.pie()
             .value(function (d) {
                 return d.value;
-            })
+            });
 
-        var dataForDisplay = pie(d3.entries(data))
+        var dataForDisplay = pie(d3.entries(data));
 
         //draw donut chart
         donut
@@ -206,7 +202,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             .enter()
             .append('path')
             .attr('d', d3.arc()
-                .innerRadius(23)         // size of donut hole
+                .innerRadius(23)
                 .outerRadius(radius)
             )
             .attr('fill', function (d) {
@@ -216,19 +212,24 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
 
     //*TOOLTIP HOVER / MOVE / LEAVE
-    var mouseover = function (d, i) {
-        Tooltip.style("opacity", 1)
+    var mouseover = function () {
+        Tooltip.style("opacity", 1);
+
         d3.selectAll(".streamgraph-tooltip")
-            .style("display", "inline")
+            .style("display", "inline");
+
         d3.selectAll(".myArea")
-            .style("opacity", .2)
+            .style("opacity", .2);
+
         d3.select(this)
             .style("stroke", "white")
-            .style("opacity", 0.8)
+            .style("opacity", 0.8);
 
-    }
+    };
+
     var mousemove = function (d, i) {
-        grp = keys[i]
+        //map keys to category names
+        grp = keys[i];
         switch (grp) {
             case "1":
                 grp = "Staatsordung";
@@ -268,42 +269,48 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                 break;
             default:
         }
+
+        //calculate position of mouse
         mouse = d3.mouse(this);
         mousex = mouse[0];
-        var invertedx = xAxis.invert(mousex).toString();
-        var year
-        var count
-        var countAllArray;
+        var invertedx = xAxis.invert(mousex).toString(),
+            year,
+            count,
+            countAllArray;
 
+        //get values for vertical tooltip
         d.forEach(function (f) {
             if (f.data.decade.toString().charAt(0) === invertedx.charAt(0)
                 && f.data.decade.toString().charAt(1) === invertedx.charAt(1)
                 && f.data.decade.toString().charAt(2) === invertedx.charAt(2)
                 || invertedx > 2009) {
 
-                if (invertedx > 2009) year = "2010 - 2019"
-                else year = f.data.decade + " - " + (f.data.decade.substr(0, 3) + 9)
+                //value of decade shown in tooltip
+                if (invertedx > 2009) year = "2010 - 2019";
+                else year = f.data.decade + " - " + (f.data.decade.substr(0, 3) + 9);
 
-                count = (f.data[keys[i]] === 0.5) ? 0 : f.data[keys[i]]
-                countAllArray = Object.values(f.data)
+                //count votes for tooltip
+                count = (f.data[keys[i]] === 0.5) ? 0 : f.data[keys[i]];
+                countAllArray = Object.values(f.data);
             }
-        })
+        });
 
         // show Tooltips
-        verticalTooltip.style("left", mousex + 85 + "px")
-        verticalTooltip.style("display", "block")
-        Tooltip.style("left", mousex + 85 + "px")
-        Tooltip.html(grp + "<br>" + "<p class='tooltip-paragraph'>" + year + ": " + "<br>" + count + " Abstimmungen" + "</p>")
+        verticalTooltip.style("left", mousex + 85 + "px");
+        verticalTooltip.style("display", "block");
 
+        Tooltip.style("left", mousex + 85 + "px");
+        Tooltip.html(grp + "<br>" + "<p class='tooltip-paragraph'>" + year + ": " + "<br>" + count + " Abstimmungen" + "</p>");
+
+        //draw donut chart inside tooltip
         //delete decade for summing up
         countAllArray.pop();
         var countAll = countAllArray.reduce((total, current) => total + current, 0);
-        //call donut-chart function
-        donutChart(countAll, count, (keys[i]))
+        donutChart(countAll, count, (keys[i]));
 
         //hide old percentage text
         d3.selectAll(".txt-percentage")
-            .style("visibility", "hidden")
+            .style("visibility", "hidden");
 
         //show percentage text
         var percentage = Math.round((100 / countAll * count) * 100) / 100;
@@ -316,26 +323,33 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
         //set info-timeline to hidden
         d3.selectAll(".streamgraph-line-info-timeline")
-            .style("visibility", "hidden")
-        d3.selectAll(".streamgraph-txt-info-timeline")
-            .style("visibility", "hidden")
-    }
+            .style("visibility", "hidden");
 
-    var mouseleave = function (d) {
-        Tooltip.style("opacity", 0)
+        d3.selectAll(".streamgraph-txt-info-timeline")
+            .style("visibility", "hidden");
+    };
+
+    var mouseleave = function () {
+        //hide all tooltips and infolines
+        Tooltip.style("opacity", 0);
+        verticalTooltip.style("display", "none");
+
         d3.selectAll(".streamgraph-tooltip")
-            .style("display", "none")
+            .style("display", "none");
+
         d3.selectAll(".myArea")
             .style("opacity", 1)
-            .style("stroke", "none")
+            .style("stroke", "none");
+
         d3.selectAll(".streamgraph-line-info-timeline")
-            .style("visibility", "visible")
+            .style("visibility", "visible");
+
         d3.selectAll(".streamgraph-txt-info-timeline")
-            .style("visibility", "visible")
-        verticalTooltip.style("display", "none")
+            .style("visibility", "visible");
+
         d3.selectAll(".txt-percentage")
-            .style("visibility", "hidden")
-    }
+            .style("visibility", "hidden");
+    };
 
 
     //*SHOW SVG STREAMGRAPH*
@@ -370,7 +384,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         )
         .on("mouseover", mouseover)
         .on("mousemove", mousemove)
-        .on("mouseleave", mouseleave)
+        .on("mouseleave", mouseleave);
 
 
     //*INFO-TIMELINE TEXT AND LINE
@@ -390,7 +404,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             .attr("x1", x)
             .attr("y1", y)
             .attr("x2", x)
-            .attr("y2", heightStream)
+            .attr("y2", heightStream);
 
         svg.append("text")
             .attr("y", y - 20)
@@ -404,4 +418,4 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             .attr("class", "streamgraph-txt-info-timeline")
             .text(line2);
     }
-})
+});
