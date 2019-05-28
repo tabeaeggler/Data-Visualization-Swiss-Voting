@@ -35,16 +35,16 @@
     padding-bottom: 0%;
     color: #262626;
     font-size: 240%;
-    margin-bottom: 4%;
+    margin-bottom: 10%;
 }
 
 #h1-word-cloud {
     font-family: 'Open Sans Condensed', sans-serif;
-    font-weight: lighter;
+    font-weight: normal;
     padding-top: 5%;
-    padding-bottom: 0%;
+    padding-bottom: 2%;
     color: #595959;
-    font-size: 250%;
+    font-size: 260%;
 }
 
 .title-container {
@@ -141,7 +141,7 @@
     opacity: 0;
     position: absolute;
     z-index: 19;
-    top: 205px;
+    top: 235px;
 }
 
 .txt-percentage {
@@ -171,7 +171,7 @@
     z-index: 19;
     width: 1px;
     height: 421px;
-    top: 205px;
+    top: 240px;
     background: #262626;
 }
 
@@ -253,6 +253,18 @@
 #legend {
     font-family: 'Open Sans Condensed', sans-serif;
     font-size: 10pt;
+}
+
+.axis-cloud {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 13px;
+    color: #595959;
+}
+
+.legend-txt {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 14px;
+    fill: #595959;
 }
 
 

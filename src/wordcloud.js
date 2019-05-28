@@ -1,6 +1,6 @@
 // set the dimensions and margins of the graph
 var marginCloud = {top: 20, right: 120, bottom: 70, left: 120},
-    widthCloud = 1150 - marginCloud.left - marginCloud.right,
+    widthCloud = 1050 - marginCloud.left - marginCloud.right,
     heightCloud = 600 - marginCloud.top - marginCloud.bottom;
 
 // append the svg object to its container
@@ -163,7 +163,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             .enter()
             .append("text")
             .style("font-size", function (d) {
-                return d.value.values.length + 15 + "px";
+                return d.value.values.length + 12 + "px";
             })
             .attr("class", "svg-cloud-text")
             .attr("text-anchor", "middle")
@@ -196,6 +196,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                 //draw x-Axis
                 svgCloud.append("g")
                     .attr("transform", "translate(0," + heightCloud + ")")
+                    .attr("class", "axis-cloud")
                     .call(d3.axisBottom(xAxisCloud).tickPadding(5).tickFormat(d3.format("d")).ticks(16));
 
                 //draw circle for each vote
@@ -277,6 +278,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                 .style("fill", '#018C9A');
             legend
                 .append("text")
+                .attr("class", "legend-txt")
                 .text("angenommene Abstimmungen")
                 .attr("x", -165)
                 .attr("y", 51);
@@ -288,6 +290,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                 .style("fill", '#FF6B2D');
             legend
                 .append("text")
+                .attr("class", "legend-txt")
                 .text("abgelehnte Abstimmungen")
                 .attr("x", -165)
                 .attr("y", 66)

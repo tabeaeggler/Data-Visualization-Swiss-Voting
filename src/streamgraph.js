@@ -305,10 +305,10 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         });
 
         // show Tooltips
-        verticalTooltip.style("left", mousex + 230 + "px");
+        verticalTooltip.style("left", mousex + 220 + "px");
         verticalTooltip.style("display", "block");
 
-        Tooltip.style("left", mousex  + 230 + "px");
+        Tooltip.style("left", mousex  + 220 + "px");
         Tooltip.html(grp + "<br>" + "<p class='tooltip-paragraph'>" + year + ": " + "<br>" + count + " Abstimmungen" + "</p>");
 
         //draw donut chart inside tooltip
@@ -325,8 +325,8 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         var percentage = Math.round((100 / countAll * count) * 100) / 100;
         var txtPercentage = svg.append("text")
             .attr("class", "txt-percentage")
-            .attr("dx", mousex + 60)
-            .attr("dy", 125)
+            .attr("dx", mousex + 51)
+            .attr("dy", 119)
             .style("text-anchor", "middle")
             .text(percentage + "%");
 
