@@ -150,7 +150,7 @@
     opacity: 0;
     position: absolute;
     z-index: 19;
-    top: 180px;
+    top: 205px;
 }
 
 .txt-percentage {
@@ -180,7 +180,7 @@
     z-index: 19;
     width: 1px;
     height: 421px;
-    top: 180px;
+    top: 205px;
     background: #000000;
 }
 
