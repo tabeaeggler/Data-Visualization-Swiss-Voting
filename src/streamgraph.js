@@ -83,10 +83,12 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
     svg.append("g")
         .attr("transform", "translate(0," + heightStream  + ")")
+        .attr("class", "axis-streamgraph")
         .call(d3.axisBottom(xAxis).tickPadding(5).tickFormat(d3.format("d")).ticks(16));
 
     //add history lines
-    svg.selectAll(".tickline").attr("stroke", "#b8b8b8");
+    svg.selectAll(".tickline")
+        .attr("stroke", "#262626")
 
     //Add Y axis
     var yAxis = d3.scaleLinear()
@@ -94,6 +96,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         .range([heightStream, 0]);
 
     svg.append("g")
+        .attr("class", "axis-streamgraph")
         .call(d3.axisLeft(yAxis).tickPadding(2));
 
     //add Y axis label
@@ -101,8 +104,8 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         .attr("transform", "rotate(-90)")
         .attr("x", 0 - (heightStream / 2))
         .attr("y", 0 - marginStream.left)
-        .attr("dy", "14pt")
-        .attr("font-family", "sans-serif")
+        .attr("dy", "16pt")
+        .attr("class", "axis-text-streamgraph")
         .style("text-anchor", "middle")
         .text("Anzahl Abstimmungen");
 

@@ -1,13 +1,4 @@
 /*GENERAL HTML*/
-@font-face {
-    font-family: 'helveticaregular';
-    src: url('./fonts/helvetica-webfont.woff2') format('woff2'),
-    url('./fonts/helvetica-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
 .pageable-1 {
     background-color: #262626;
 }
@@ -159,7 +150,7 @@
 }
 
 .streamgraph-line-info-timeline {
-    stroke: black;
+    stroke: #262626;
     stroke-width: 1;
     stroke-dasharray: 4, 2;
 }
@@ -181,12 +172,23 @@
     width: 1px;
     height: 421px;
     top: 205px;
-    background: #000000;
+    background: #262626;
 }
 
 .tooltip-paragraph {
     font-size: 11pt;
     margin-top: 5px;
+}
+
+.axis-streamgraph {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 13px;
+    color: #262626;
+}
+
+.axis-text-streamgraph {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 18px;
 }
 
 /* Wordcloud*/
