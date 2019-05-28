@@ -78,6 +78,7 @@
     color: #595959;
 }
 
+
 /* Linegraph*/
 #linegraph {
     margin-bottom: 7%;
@@ -191,6 +192,7 @@
     font-size: 18px;
 }
 
+
 /* Wordcloud*/
 
 #wordcloud {
@@ -232,7 +234,6 @@
     visibility: hidden;
 }
 
-
 .tip {
     line-height: 1;
     font-weight: bold;
@@ -266,6 +267,3 @@
     font-size: 14px;
     fill: #595959;
 }
-
-
-
