@@ -42,15 +42,15 @@
     font-family: 'Open Sans Condensed', sans-serif;
     font-weight: normal;
     padding-top: 5%;
-    padding-bottom: 2%;
+    padding-bottom: 0%;
     color: #595959;
-    font-size: 260%;
+    font-size: 250%;
 }
 
 .title-container {
     margin-right: auto;
     margin-left: auto;
-    width: 40%;
+    width: 35%;
     text-align: center;
 }
 

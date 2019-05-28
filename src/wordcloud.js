@@ -1,6 +1,6 @@
 // set the dimensions and margins of the graph
 var marginCloud = {top: 20, right: 120, bottom: 70, left: 120},
-    widthCloud = 1050 - marginCloud.left - marginCloud.right,
+    widthCloud = 1150 - marginCloud.left - marginCloud.right,
     heightCloud = 600 - marginCloud.top - marginCloud.bottom;
 
 // append the svg object to its container
