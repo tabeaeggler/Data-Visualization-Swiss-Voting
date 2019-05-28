@@ -17,11 +17,13 @@ var svgLine = d3.select("#linegraph").append("svg")
 // Convert CSV into an array of objects
 d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
+    //nest data
     var nested_data = d3.nest()
         .key(function(d) { return d.d1e1; })
         .rollup(function(l) { return l.length; })
         .entries(data);
 
+    //Array with bottom values -> "mountain design"
     var bottom_values = [
         {key: 0, value: 0},
         {key: 0, value: 3},
@@ -37,6 +39,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         {key: 0, value: 0}
     ]
 
+    //mix array (nested data and bottom values) -> "mountain design"
     var mixed_data = new Array();
     for (i = 0; i < nested_data.length; i++) {
         mixed_data.push(bottom_values[i]);
@@ -45,58 +48,51 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
     //add last bottom value
     mixed_data.push({key: 0, value: 0})
 
-
     //count all abstimmungen
     var countAll = d3.sum(nested_data, function(d) {
         return d.value;
     });
 
-    //nest data (angneommen + abgelehnt)
-    var acceptedData = d3.nest().key(function (d) {
-        return d.status;
-    })
 
-    // X scale
+    //*X & Y AXIS*
     var xScale = d3.scaleLinear()
         .domain([0, mixed_data.length]) // input
         .range([0, width ]); // output
 
-    // Y scale for all data
     var yScale = d3.scaleLinear()
         .domain([0, d3.max(mixed_data, function(d) { return +d.value; })])
         .range([ height, 0 ]);
-    //svgLine.append("g").call(d3.axisLeft(yScale));
 
-    // all X and Y scale positions
+    // array with all X and Y scale positions
     var yPositions = new Array();
     var xPositions = new Array();
 
-    // X and Y scale positions just for mountain top data
+    // array with X and Y scale positions -> just for mountain top data
     var yPositionsPeak = new Array();
     var xPositionsPeak = new Array();
 
-    // Append the path, bind the data, and call the line generator
+
+    //*GENERATE PATH*
+    // Append the path, bind the data & call the line generator
     var path = svgLine.append("path")
-        .datum(mixed_data) // Binds data to the line
+        .datum(mixed_data)
         .attr("class", "line")
         .attr("d", d3.line()
             .x(function(d, i) {
                 xPositions.push(xScale(i))
-                return xScale(i); }) // set the x values for the line generator
+                return xScale(i); }) // set the x values
             .y(function(d) {
                 yPositions.push(yScale(d.value))
-                return yScale(d.value); }) // set the y values for the line generator
-
+                return yScale(d.value); }) // set the y values
         )
-    ; // Calls the line generator
+    ;
 
-    // Y scale positions just for mountain top data -> all odd numbers
+    // Y & X scale positions just for mountain top data -> all odd numbers
     for (var i = 0; i < yPositions.length; i++){
         if (i % 2 != 0){
             yPositionsPeak.push(yPositions[i])
         }
     }
-    // X scale positions just for mountain top data -> all odd numbers
     for (var i = 0; i < xPositions.length; i++){
         if (i % 2 != 0){
             xPositionsPeak.push(xPositions[i])
@@ -108,6 +104,8 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         linesText = draw_lines(yPositionsPeak[i], xPositionsPeak[i], nested_data[i].key, nested_data[i].value);
     }
 
+
+    //*Text description and vertical lines*
     function draw_lines(y, x, txt, value) {
         grp = txt
         switch (grp) {
@@ -211,10 +209,10 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         .style('opacity', 1)
         .attr("class", "txt-total");
 
-    //Animation
+
+    //*ANIMATION*
     var totalLength = path.node().getTotalLength();
 
-    // Set Properties of Dash Array and Dash Offset and initiate Transition
     path
         .attr("stroke-dasharray", totalLength + " " + totalLength)
         .attr("stroke-dashoffset", totalLength)
