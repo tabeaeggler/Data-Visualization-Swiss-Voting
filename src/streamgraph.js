@@ -401,12 +401,15 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
     //*INFO-TIMELINE TEXT AND LINE
     //call functions
-    draw_lines_lb(300, 362, "Start", "1. WK");
-    draw_lines_lb(260, 395, "Ende", "1. WK");
-    draw_lines_lb(310, 532, "Start", "2. WK");
-    draw_lines_lb(220, 575, "Ende", "2. WK");
-    draw_lines_lb(50, 750, "", "Frauenstimmrecht");
-    draw_lines_lb(120, 805, "", "Ölpreiskrise");
+    draw_lines_lb(320, 363, "Start", "1. WK");
+    draw_lines_lb(280, 397, "Ende", "1. WK");
+    draw_lines_lb(320, 535, "Start", "2. WK");
+    draw_lines_lb(280, 575, "Ende", "2. WK");
+    draw_lines_lb(210, 595, "Start", "Kalter Krieg");
+    draw_lines_lb(70, 746, "", "Frauenstimmrecht");
+    draw_lines_lb(55, 872, "Ende", "Kalter Krieg");
+    //draw_lines_lb(55, 775, "", "1.Ölkriese");
+    //draw_lines_lb(55, 805, "", "2.Ölpreiskriese");
     draw_lines_lb(15, 940, "Totalrevision der", "Bundesverfassung");
 
     //function to draw lines and add text (with linebreak) for info-timeline
