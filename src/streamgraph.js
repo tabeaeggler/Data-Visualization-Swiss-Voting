@@ -306,9 +306,11 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
         // show Tooltips
         verticalTooltip.style("left", mousex + 220 + "px");
-        verticalTooltip.style("display", "block");
+        //try with inline-block instead of block
+        verticalTooltip.style("display", "inline-block");
 
         Tooltip.style("left", mousex  + 220 + "px");
+        Tooltip.style("display", "inline-block");
         Tooltip.html(grp + "<br>" + "<p class='tooltip-paragraph'>" + year + ": " + "<br>" + count + " Abstimmungen" + "</p>");
 
         //draw donut chart inside tooltip

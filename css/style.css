@@ -148,6 +148,7 @@
 .txt-percentage {
     font-family: 'Open Sans Condensed', sans-serif;
     font-size: 10pt;
+    display: inline-block;
 }
 
 .streamgraph-line-info-timeline {
@@ -172,7 +173,7 @@
     z-index: 19;
     width: 1px;
     height: 421px;
-    top: 240px;
+    top: 239px;
     background: #262626;
 }
 
