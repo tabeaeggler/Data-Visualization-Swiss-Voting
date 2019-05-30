@@ -46,7 +46,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         mixed_data.push(nested_data[i]);
     }
     //add last bottom value
-    mixed_data.push({key: 0, value: 0})
+    mixed_data.push({key: 0, value: 0});
 
     //count all abstimmungen
     var countAll = d3.sum(nested_data, function(d) {
@@ -79,10 +79,10 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         .attr("class", "line")
         .attr("d", d3.line()
             .x(function(d, i) {
-                xPositions.push(xScale(i))
+                xPositions.push(xScale(i));
                 return xScale(i); }) // set the x values
             .y(function(d) {
-                yPositions.push(yScale(d.value))
+                yPositions.push(yScale(d.value));
                 return yScale(d.value); }) // set the y values
         )
     ;
@@ -90,12 +90,12 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
     // Y & X scale positions just for mountain top data -> all odd numbers
     for (var i = 0; i < yPositions.length; i++){
         if (i % 2 != 0){
-            yPositionsPeak.push(yPositions[i])
+            yPositionsPeak.push(yPositions[i]);
         }
     }
     for (var i = 0; i < xPositions.length; i++){
         if (i % 2 != 0){
-            xPositionsPeak.push(xPositions[i])
+            xPositionsPeak.push(xPositions[i]);
         }
     }
 
@@ -159,7 +159,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             .delay(2800)
             .transition()
             .duration(1000)
-            .style('opacity', 1)
+            .style('opacity', 1);
 
         svgLine.append("text")
             .attr("class", "linegraph-txt")

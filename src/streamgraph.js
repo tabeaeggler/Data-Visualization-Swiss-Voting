@@ -82,7 +82,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         .nice();
 
     svg.append("g")
-        .attr("transform", "translate(0," + heightStream + ")")
+        .attr("transform", "translate(0," + heightStream  + ")")
         .attr("class", "axis-streamgraph")
         .call(d3.axisBottom(xAxis).tickPadding(5).tickFormat(d3.format("d")).ticks(16));
 
@@ -312,7 +312,6 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                 countAllArray = Object.values(f.data);
             }
         });
-
 
         // show Tooltips
         verticalTooltip.style("left", mousex + 195 + "px");
