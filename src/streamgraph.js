@@ -256,7 +256,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                 grp = "Landwirtschaft";
                 break;
             case "6":
-                grp = "Öffentliche Finanzen";
+                grp = "Öffentliche Finanzen";
                 break;
             case "7":
                 grp = "Energie";
@@ -305,10 +305,10 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         });
 
         // show Tooltips
-        verticalTooltip.style("left", mousex + 220 + "px");
+        verticalTooltip.style("left", mousex + 195 + "px");
         verticalTooltip.style("display", "block");
 
-        Tooltip.style("left", mousex  + 220 + "px");
+        Tooltip.style("left", mousex  + 195 + "px");
         Tooltip.html(grp + "<br>" + "<p class='tooltip-paragraph'>" + year + ": " + "<br>" + count + " Abstimmungen" + "</p>");
 
         //draw donut chart inside tooltip
@@ -325,8 +325,8 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         var percentage = Math.round((100 / countAll * count) * 100) / 100;
         var txtPercentage = svg.append("text")
             .attr("class", "txt-percentage")
-            .attr("dx", mousex + 51 + "px")
-            .attr("dy", 119 + "px")
+            .attr("dx", mousex + 60 + "px")
+            .attr("dy", 120 + "px")
             .style("text-anchor", "middle")
             .text(percentage + "%");
 

@@ -31,11 +31,11 @@
 #h1-streamgraph, #h1-about {
     font-family: 'Open Sans Condensed', sans-serif;
     font-weight: lighter;
-    padding-top: 5%;
+    padding-top: 25px;
     padding-bottom: 0%;
     color: #262626;
     font-size: 240%;
-    margin-bottom: 10%;
+    margin-bottom: 30px;
 }
 
 #h1-word-cloud {
@@ -50,7 +50,7 @@
 .title-container {
     margin-right: auto;
     margin-left: auto;
-    width: 40%;
+    width: 580px;
     text-align: center;
 }
 
@@ -137,12 +137,12 @@
     font-size: 14pt;
     width: auto;
     height: 110px;
-    margin-left: 5px;
+    margin-left: 10px;
     overflow: visible;
     opacity: 0;
     position: absolute;
     z-index: 19;
-    top: 235px;
+    top: 200px;
 }
 
 .txt-percentage {
@@ -172,7 +172,7 @@
     z-index: 19;
     width: 1px;
     height: 421px;
-    top: 240px;
+    top: 205px;
     background: #262626;
 }
 
