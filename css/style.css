@@ -143,6 +143,7 @@
     position: absolute;
     z-index: 19;
     top: 200px;
+    text-align: left;
 }
 
 .txt-percentage {

@@ -121,11 +121,11 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
     //Credits to: http://bl.ocks.org/WillTurman/4631136
     //--> the following tooltip implementation was inspired by the above mentioned source
     //--> some parts were copied and some adjusted for our own purpose
-    var Tooltip = d3.select("div")
+    var Tooltip = d3.select("#streamgraph")
         .append("div")
         .attr("class", "streamgraph-tooltip");
 
-    var verticalTooltip = d3.select("div")
+    var verticalTooltip = d3.select("#streamgraph")
         .append("div")
         .attr("class", "tooltip-line");
 
@@ -313,11 +313,15 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             }
         });
 
+        //calculate position of tooltip according to screenwidth
+        var screenWidth = window.screen.width;
+        var mousePercentage = ( mousex * 100 ) / screenWidth ;
+
         // show Tooltips
-        verticalTooltip.style("left", mousex + 195 + "px");
+        verticalTooltip.style("left", mousePercentage + 13 + "%");
         verticalTooltip.style("display", "block");
 
-        Tooltip.style("left", mousex + 195 + "px");
+        Tooltip.style("left", mousePercentage + 13 + "%");
         Tooltip.html(grp + "<br>" + "<p class='tooltip-paragraph'>" + year + ": " + "<br>" + count + " Abstimmungen" + "</p>");
 
         //draw donut chart inside tooltip
@@ -352,6 +356,8 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         d3.selectAll(".streamgraph-txt-info-timeline")
             .style("visibility", "visible");
 
+        d3.selectAll(".txt-percentage")
+            .style("visibility", "hidden");
     };
 
 
