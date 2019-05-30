@@ -82,7 +82,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         .nice();
 
     svg.append("g")
-        .attr("transform", "translate(0," + heightStream  + ")")
+        .attr("transform", "translate(0," + heightStream + ")")
         .attr("class", "axis-streamgraph")
         .call(d3.axisBottom(xAxis).tickPadding(5).tickFormat(d3.format("d")).ticks(16));
 
@@ -138,6 +138,8 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             heightDonut = 70,
             marginDonut = 0,
             radius = Math.min(widthDonut, heightDonut) / 2 - marginDonut;
+
+        var percentage = Math.round((100 / countAll * count) * 100) / 100;
 
         var donut = d3.select(".streamgraph-tooltip")
             .append("svg")
@@ -217,6 +219,13 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             .attr('fill', function (d) {
                 return (color(d.data.key))
             })
+
+        donut.append("text")
+            .attr("class", "txt-percentage")
+            .attr("x", 0 + "px")
+            .attr("y", 5 + "px")
+            .style("text-anchor", "middle")
+            .text(percentage + "%")
     }
 
 
@@ -304,11 +313,12 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             }
         });
 
+
         // show Tooltips
         verticalTooltip.style("left", mousex + 195 + "px");
         verticalTooltip.style("display", "block");
 
-        Tooltip.style("left", mousex  + 195 + "px");
+        Tooltip.style("left", mousex + 195 + "px");
         Tooltip.html(grp + "<br>" + "<p class='tooltip-paragraph'>" + year + ": " + "<br>" + count + " Abstimmungen" + "</p>");
 
         //draw donut chart inside tooltip
@@ -316,19 +326,6 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         countAllArray.pop();
         var countAll = countAllArray.reduce((total, current) => total + current, 0);
         donutChart(countAll, count, (keys[i]));
-
-        //hide old percentage text
-        d3.selectAll(".txt-percentage")
-            .style("visibility", "hidden");
-
-        //show percentage text
-        var percentage = Math.round((100 / countAll * count) * 100) / 100;
-        var txtPercentage = svg.append("text")
-            .attr("class", "txt-percentage")
-            .attr("dx", mousex + 60 + "px")
-            .attr("dy", 120 + "px")
-            .style("text-anchor", "middle")
-            .text(percentage + "%");
 
         //set info-timeline to hidden
         d3.selectAll(".streamgraph-line-info-timeline")
@@ -356,8 +353,6 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         d3.selectAll(".streamgraph-txt-info-timeline")
             .style("visibility", "visible");
 
-        d3.selectAll(".txt-percentage")
-            .style("visibility", "hidden");
     };
 
 
@@ -377,14 +372,12 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         .attr("d", d3.area()
             .curve(d3.curveNatural)
             .x(function (d) {
-                if(d.data.decade !== "2010" && d.data.decade !== "1860")
-                {
+                if (d.data.decade !== "2010" && d.data.decade !== "1860") {
                     return xAxis(Number(d.data.decade) + 5);
-                } else if(d.data.decade === "1860") {
+                } else if (d.data.decade === "1860") {
                     return xAxis(d.data.decade);
-                }
-                else {
-                    return xAxis(Number(d.data.decade) + 9 );
+                } else {
+                    return xAxis(Number(d.data.decade) + 9);
                 }
             })
             .y0(function (d) {
