@@ -320,10 +320,10 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
         console.log(mousePercentage)
 
         // show Tooltips
-        verticalTooltip.style("left", mousePercentage + 14 + "%");
+        verticalTooltip.style("left", mousePercentage + 13.5     + "%");
         verticalTooltip.style("display", "block");
 
-        Tooltip.style("left", mousePercentage + 14 + "%");
+        Tooltip.style("left", mousePercentage + 13.5 + "%");
         Tooltip.html(grp + "<br>" + "<p class='tooltip-paragraph'>" + year + ": " + "<br>" + count + " Abstimmungen" + "</p>");
 
         //draw donut chart inside tooltip
