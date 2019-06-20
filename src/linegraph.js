@@ -125,7 +125,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
                 grp = "Landwirtschaft";
                 break;
             case "6":
-                grp = "Öffentliche Finanzen";
+                grp = "Öffentliche Finanzen";
                 break;
             case "7":
                 grp = "Energie";

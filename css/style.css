@@ -28,7 +28,7 @@
     font-size: 240%;
 }
 
-#h1-streamgraph, #h1-about {
+#h1-about {
     font-family: 'Open Sans Condensed', sans-serif;
     font-weight: lighter;
     padding-top: 25px;
@@ -38,6 +38,16 @@
     margin-bottom: 30px;
 }
 
+#h1-streamgraph {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: lighter;
+    padding-top: 25px;
+    padding-bottom: 0%;
+    color: #262626;
+    font-size: 240%;
+    margin-bottom: 0;
+}
+
 #h1-word-cloud {
     font-family: 'Open Sans Condensed', sans-serif;
     font-weight: normal;
@@ -45,6 +55,16 @@
     padding-bottom: 0%;
     color: #595959;
     font-size: 250%;
+}
+
+#h2-streamgraph {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: normal;
+    color: #595959;
+    font-size: 120%;
+    margin-top: 0;
+    margin-bottom: 56px;
+
 }
 
 .title-container {
