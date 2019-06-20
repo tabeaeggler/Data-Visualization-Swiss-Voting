@@ -231,7 +231,6 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
 
     //*TOOLTIP HOVER / MOVE / LEAVE
     var mouseover = function () {
-        console.log("mouseover")
         Tooltip.style("opacity", 1);
 
         d3.selectAll(".streamgraph-tooltip")
@@ -247,7 +246,6 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
     };
 
     var mousemove = function (d, i) {
-        console.log("mousemove")
         //map keys to category names
         grp = keys[i];
         switch (grp) {
@@ -340,7 +338,6 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
     };
 
     var mouseleave = function () {
-        console.log("mouseleave")
         //hide all tooltips and infolines
         Tooltip.style("opacity", 0);
         verticalTooltip.style("display", "none");
