@@ -288,7 +288,7 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             default:
         }
 
-        //calculate position of mouse
+
         mouse = d3.mouse(this);
         mousex = mouse[0];
         var invertedx = xAxis.invert(mousex).toString(),
@@ -313,17 +313,14 @@ d3.csv("./data/SwissvoteV2.csv").then(function (data) {
             }
         });
 
-        //calculate position of tooltip according to screenwidth
-        var screenWidth = window.screen.width;
-        var mousePercentage = ( mousex * 100 ) / screenWidth ;
-
-        console.log(mousePercentage)
+        //calculate position of mouse
+        var mousePosX = svg.node().getBoundingClientRect().left + mousex + 62;
 
         // show Tooltips
-        verticalTooltip.style("left", mousePercentage + 14.2 + "%");
+        verticalTooltip.style("left", mousePosX + "px");
         verticalTooltip.style("display", "block");
 
-        Tooltip.style("left", mousePercentage + 14.2 + "%");
+        Tooltip.style("left", mousePosX + "px");
         Tooltip.html(grp + "<br>" + "<p class='tooltip-paragraph'>" + year + ": " + "<br>" + count + " Abstimmungen" + "</p>");
 
         //draw donut chart inside tooltip
