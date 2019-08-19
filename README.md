@@ -1,5 +1,7 @@
-﻿# Das Abstimmungsverhalten der letzten 150 Jahren
-Wir haben die Vorlagen, über welche die Schweizer Bürger seit Einführung der Bundesverfassung von 1848 abstimmen durften, analysiert.
+﻿# Schweizer Volksinitiativen im Kontext der Zeit
+Eine interaktive Visualisierung von Tabea Eggler und Hannah-Sarah Kühne, FHNW
+Link zum Projekt: https://web.fhnw.ch/technik/projekte/ivis/2019/abstimmungen_ch/
+Das Regierungssystem der Schweiz ist weltweit einzigartig und ermöglicht eine ausserordentliche Beteiligung des Volkes in der politischen Entscheidungsfindung. Je nach gesellschaftlicher Situation stimmen Schweizer und Schweizerinnen über unterschiedliche Themenbereiche ab. Mit unseren Visualisierungen geben wir einen vertieften Einblick in dieses Abstimmungsverhalten.
 
 ## Result
 3 verschiedene Charts haben wir realisiert:
