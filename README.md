@@ -7,6 +7,8 @@ Das Regierungssystem der Schweiz ist weltweit einzigartig und ermöglicht eine a
 2) Word Cloud: Abstimmungsverhalten von ausgewählten Themenbereiche
 3) Streamgraph: Veränderung der Anzahl Abstimmungen pro Themenbereich
 
+Link zum Projekt: https://web.fhnw.ch/technik/projekte/ivis/2019/abstimmungen_ch/
+
 ## Data Set
 Swissvotes ist die umfassendste bestehende Datenbank für eidgenössische Volksabstimmungen. Sie enthält Daten zu allen Abstimmungsvorlagen seit 1848: http://www.swissvotes.ch/
 
