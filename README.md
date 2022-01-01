@@ -1,4 +1,6 @@
-﻿# Schweizer Volksinitiativen im Kontext der Zeit
+(Swiss popular initiatives in the context of the time: english translation in "README_English.md")
+
+# Schweizer Volksinitiativen im Kontext der Zeit
 Das Regierungssystem der Schweiz ist weltweit einzigartig und ermöglicht eine ausserordentliche Beteiligung des Volkes in der politischen Entscheidungsfindung. Je nach gesellschaftlicher Situation stimmen Schweizer und Schweizerinnen über unterschiedliche Themenbereiche ab. Mit unseren Visualisierungen geben wir einen vertieften Einblick in dieses Abstimmungsverhalten.
 
 Link zum Projekt: https://web.fhnw.ch/technik/projekte/ivis/2019/abstimmungen_ch/
