@@ -10,7 +10,7 @@ Link to the project: https://web.fhnw.ch/technik/projekte/ivis/2019/abstimmungen
 Social policy and the state order provide the most basis for discussion. Whereas votes on topics such as education and culture are only half as common.</p>
 <img src="https://github.com/tabeaeggler/Data-Visualization-Swiss-Voting/blob/master/img/1-linegraph.jpg" width="500"/>
  
-<h3>Word Cloud: voting patterns by issue</h3>.
+<h3>Word Cloud: voting patterns by issue</h3>
 <p>The breakdown of subject areas by initiatives approved and rejected illustrates voting behavior over time. It becomes apparent how varied the votes are in the "fundamental rights" section but also that topics such as homosexuality are hardly taken up politically.</p>
 <img src="https://github.com/tabeaeggler/Data-Visualization-Swiss-Voting/blob/master/img/2-wordcloud.jpg" width="500"/>
  
